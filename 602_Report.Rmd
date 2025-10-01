@@ -4,7 +4,7 @@ author: "Group4: Johanna Enright - 30303537, Uyoyoumena Orona - 30295200,\n Agam
 date: "Date: `r Sys.Date()`"
 output: pdf_document
 bibliography: references.bib
-csl: apa.xml
+csl: apa.csl
 ---
 
 ```{r setup, include=FALSE}
