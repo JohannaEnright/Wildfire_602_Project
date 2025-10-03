@@ -15,18 +15,43 @@ knitr::opts_chunk$set(echo = TRUE)
 ### Hey guys, lets use APA citation again. save any references in a bib
 #in-text citation is [@key] for example [@alberta_wildfire_dataset]
 ```
-For example, here is our dataset in-text citation [@alberta_wildfire_dataset] and the full citation will appear at the bottom.
+
+For example, here is our data set in-text citation [@alberta_wildfire_dataset] and the full citation will appear at the bottom.
+
+# Abstract
+- maybe we want an abstract (which we will write at the end)?
 
 # Introduction
-- written text about wildfires and why they are bad here
-- a little bitty about how climate changing is increasing lightning strikes and making forests drier and more flammable here.
-- a bit about wind and wildfire prediction here.
+
+\indent In Canada and across the world, we have seen an increase in forest area burned due to forest fires, with 2023 being an a record breaking year in forest damage for Canada [@MacCarthy2025]. Climate change is the main culprit, with changing weather patterns bringing heatwaves and drought which makes forests more easily ignitable than in the past [@MacCarthy2025]. Wildfires can be devastating to the forest ecosystem, but they also can have large ramifications on the economy and human health [@SadofAlexander2023]. When forests are burned, carbon dioxide is released into the air, further exacerbating our climate crisis and creating a positive feedback loop for future disastrous wildfires [@SadofAlexander2023]. Scientists have made significant efforts to understand forest fire dynamics allowing for improved forest fire mitigation and combative tactics *cite?*. However, it is of great importance to continue to research and understand how the forest fire landscape in Canada is changing so we can be better prepared to mitigate the environmental, economic, and social damages they will cause.
+
+\indent Our project looks at forest fire data in Alberta between 2006 and 2024 [@alberta_wildfire_dataset]. Specifically this data includes wildfires only occurring within the FPA (forest protection area), either provincial or federally owned/managed lands. Information on various fire dynamic factors, including total area burned, and provides time stamps and location coordinates for each wildfire entry [@alberta_wildfire_dataset]. We are narrowing our focus down to specifically investigate how weather factors, like wind speed, contribute to fire spread rate as well as how the cause of fires (specifically lightning) may be shifting over time due to climate change.
+
+## Investigation Goal
+\indent *Question 1* Our initial area of interest is to investigate if the frequency of lightning-caused forest fires is increasing due to climate change. Research has indicated that the frequency of lightning-caused forest fires is increasing due to climate change [@Beverly2024]. We want to see if the Alberta forest fire data corroborates this claim. We hypothesize that the proportion of lightning-caused forest fires in 2024 will be greater than the proportion of lightning-caused forest fires in 2006.
+
+\indent *Question 2*: There are a variety of environmental factors which affect how quickly a fire spreads, ultimately contributing to the overall impact and environmental burden that a forest fire has on its surrounding area. We are investigating how one key weather variable, wind speed, affects the fire spread rate. Our hypothesis is that a wind speed will be directly proportional with the fire spread rate.
+
+## Practical Implications
+\indent
+######## insert your research here ##########
+-   a little bitty about how climate changing is increasing lightning strikes and making forests drier and more flammable here + practical implications here.
+
+-   a bit about wind and wildfire prediction here and models and why it's important here.
+##############################################################
+
+##Variables of Interest
+\indent *Question 1*: The variables we will analyze are fires within the “GENERAL_CAUSE” column of the data set which are “Lightning” (1 Success). All other fires within the “GENERAL_CAUSE” column which are not “Lightning” will be considered a 0 (Failure). We will analyze this variable for fires in the “YEAR” 2024 and compare it to fires from the “YEAR” 2006.
+
+\indent *Question 2*: For the linear regression, our independent (x) variable will be the numerical variable “WIND_SPEED” (in km/h) and our dependent (y) variable will be the numerical variable “FIRE_SPREAD_RATE” (in m/min).
 
 
 
-## Hypotheses
-- add our hypotheses here.
+## Data set information
+\indent This data comes from the Government of Alberta official website, published by Forestry and Parks. The full data set name is Historical wildfire data: 2006 to 2024 [@alberta_wildfire_dataset]. It contains information licensed under the Open Government Licence - Alberta. This worldwide, royalty-free, perpetual, non-exclusive license allows us to copy, modify, publish, translate, adapt, distribute or otherwise use the information in any medium, mode or format for any lawful purpose (Government of Alberta). 
+The data collection period was from 2006-01-01 to 2024-12-31. The resource was created on 2020-01-09 and was last modified on 2025-01-31. Updates to this data set are irregular in frequency. 
 
+\indent Much of the wild fire information includes the personnel responsible for wildfire assessment and is time stamped [@wilfire_data_dictionary]. The “GENERAL_CAUSE” of wildfires is investigated by Alberta wildfire officials. Wildfires under investigation where the cause was not determined were labelled “Undetermined”. “FIRE_SPREAD_RATE” and “WIND_SPEED” were recorded at the time of initial fire assessment. The exact assessors are Alberta Wildfire personnel and are indicated in the “ASSESSMENT_RESOURCE” column of the data set who assessed the fire at the recorded “ASSESSMENT_DATETIME”. Assessors include “air attack officer”, “initial action forces”, “wildfire assessor”, or “other”. More details on these assessment positions can be found in the Historical Wildfire Data Dictionary [@wilfire_data_dictionary].
 
 
 
@@ -34,6 +59,7 @@ For example, here is our dataset in-text citation [@alberta_wildfire_dataset] an
 
 
 # Data Visualization
+
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, include = FALSE}
 #put imported libraries here
 library(tidyverse)
@@ -41,31 +67,20 @@ library(mosaic)
 
 ```
 
-
 ```{r, include=FALSE}
 #read in wildfire csv file
 url <- "https://raw.githubusercontent.com/JohannaEnright/Wildfire_602_Project/refs/heads/main/fp-historical-wildfire-data-2006-2024.csv"
 df = read_csv(url, show_col_types = F)
 ```
 
-- here is where we can put our code to generate plots for distributions and visualizations and such.
-
-
-
-
-
-
-
-
-
-
-
+-   here is where we can put our code to generate plots for distributions and visualizations and such.
 
 # Statistical Analyses
 
-
 ## Question 1: Is the proportion of lightning-caused wildfires from 2024 significantly greater than those from 2006?
+
 Here we will acquire the proportion data for lightning caused wild fires in 2006 and 2024.
+
 ```{r}
 ####### determining proportion for lightning caused fires in 2006 and 2024  #######
 
@@ -84,18 +99,19 @@ p_lightning_2024 <- x_2024/n_2024
 print(paste("The 2006 proportion is", round(p_lightning_2006,4) ," and the 2024 proportion is", round(p_lightning_2024,4)))
 ```
 
-
 Next we will confirm that our data follows the assumptions necessary to use a parametric test. (i.e. that n is sufficiently large under the central limit theorem).
+
 ```{r}
 ## confirming it follows assumtions (np > 10) , (nq > 10)   # is sufficiently large.
 n_2006*p_lightning_2006 >10 ; n_2006*(1 - p_lightning_2006) > 10 ## greater than 10
 n_2024*p_lightning_2024 > 10 ; n_2024*(1 - p_lightning_2024) > 10
 
 ```
+
 Confirmed here, all values of n are sufficiently large to use the central limit theorem tests.
 
-
 Testing hypothesis $H_{0}: p_{2024} \leq p_{2006}$ and $H_{A}: p_{2024} > p_{2006}$
+
 ```{r}
 #############################  CALCULATING Z-observed ####################################
 # Zobs = ((phat1 - phat2) - (p1 - p2)) / sqrt(phat*(1-phat)*(1/n1 + 1/n2))
@@ -108,7 +124,9 @@ pvalue <- round(1 - pnorm(Zobs),5)
 print(paste("The test statistic is:", round(Zobs,4), "The p-value is:", pvalue))
 
 ```
+
 Therefore, because our p-value is less than our alpha of 0.05, we can conclude that the proportion of lightning caused wildfires in 2024 is significantly greater than the proportion from 2006.
+
 ```{r, warning=FALSE}
 #set up dataframe
 x <- seq(-5, 5,0.001)
@@ -136,10 +154,8 @@ p <- df_norm %>%
 print(p)
 ```
 
-
-
-
 Next, we will confirm our findings with a 95% Agresti-Coull Confidence interval for the difference in proportions, $p_{2024}-p_{2006}$.
+
 ```{r}
 ################## USING THE AGRESTI-COULL (+1/+2 METHOD) 95% CI ################################
 # (ptilde1 - ptilde2) +/-  (z (1 - alpha/2)) * sqrt((ptilde1*qtilde1/(n1 + 2)) + (ptilde2*qtilde2)/(n2 + 2))
@@ -159,9 +175,11 @@ ub <- ptilde_diff + z * SE
 paste(round(lb, 4), "-", round(ub, 4))
 # CONCLUSION : 2024 HAS A SIGNIFICANTLY HIGHER PROPORITON OF LIGHTNING-CAUSED WILDFIRES THAT 2006
 ```
+
 Our 95% confidence interval for $p_{2024}-p_{2006}$ lies between `r paste(round(lb, 4), "-", round(ub, 4))`. Both lower and upper bounds of our confidence interval are greater than 0, so this supports the above conclusion that the proportion of lightning caused wildfires from 2024 is significantly greater than that of 2006.
 
 Here is a visualization for our 95% confidence interval.
+
 ```{r, warning=FALSE}
 # Visualization 
 plot_df <- tibble(
@@ -189,10 +207,8 @@ ggplot(plot_df, aes(x = YEAR, y = prop, fill = YEAR)) +
 
 ```
 
-
 ## Question 2
-- Agam and Mena, you guys can do your analyses here.
 
-
+-   Agam and Mena, you guys can do your analyses here.
 
 # References
