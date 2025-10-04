@@ -5,10 +5,7 @@ author: "Group4: Johanna Enright - 30303537, Uyoyoumena Orona - 30295200,\nAgamb
 date: 'Date: `r Sys.Date()`'
 output:
   pdf_document:
-    toc: true
   bookdown::pdf_document2:
-    toc: true
-    number_sections: true
 bibliography: references.bib
 csl: apa.csl
 ---
@@ -136,6 +133,7 @@ In the end, we will also utilize a residual plot to assess our regression.
 library(tidyverse)
 library(mosaic)
 library(bookdown)
+library(binom)
 ```
 
 ```{r, include=FALSE, cache=TRUE}
@@ -145,7 +143,6 @@ df = read_csv(url, show_col_types = F)
 ```
 
 # 5. Results
-
 We will investigate our initial question to see if the proportion of lightning-caused forest fires is significantly greater in 2024 than it is in 2006.
 ```{r, echo=FALSE, cache=TRUE}
 ####### determining proportion for lightning caused fires in 2006 and 2024  #######
@@ -174,7 +171,7 @@ df_count <- tibble(year = c(2006, 2006, 2024, 2024),
                          round(p_lightning_2024*100,1), round((1-p_lightning_2024)*100,1))
             )
 
-df_count %>% 
+pies <- df_count %>% 
  # filter(year == 2006) %>% 
   ggplot(aes(x = "", y = percents, fill = category)) +
   geom_bar(stat = "identity", width = 1) +   # Make bar chart
@@ -182,41 +179,36 @@ df_count %>%
   geom_text(aes(label = paste0(percents, "%")),
             position = position_stack(vjust = 0.5)) +
   facet_wrap(~year) +
- # ggtitle("Proportion of Lightning-Caused Fires in 2006 and 2024") +
+  ggtitle("Proportion of Lightning-Caused Fires in 2006 and 2024") +
   theme_void() +                               # Remove background/axes 
-  theme(plot.title = element_text(hjust = 0.5,
+  theme(plot.title = element_text(hjust = 0.5, size = 11,
         margin = margin(b = 15))   # adjust vertical position
   )
-  
+print(pies)
+ggsave("../plots/pieprops.png", plot = pies, scale = 2, width = 6, height = 6, units="cm", dpi = 600)
 ```
 
-
-Next we will confirm that our data follows the assumptions necessary to use a parametric test. (i.e. that n is sufficiently large under the central limit theorem).
-
+We have confirmed that our data follows the necessary assumptions required for parametric tests.
 ```{r, asummptiontest1, include=FALSE, cache=TRUE}
 ## confirming it follows assumtions (np > 10) , (nq > 10)   # is sufficiently large.
-assum_1 <- n_2006*p_lightning_2006 >10 ; assum_2 <- n_2006*(1 - p_lightning_2006) > 10 ## greater than 10
-assum_3 <- n_2024*p_lightning_2024 > 10 ; assum_4 <- n_2024*(1 - p_lightning_2024) > 10
+assum1 <- rn_2006*p_lightning_2006 >10 ; assum2 <- n_2006*(1 - p_lightning_2006) > 10 ## greater than 10
+assum3 <- n_2024*p_lightning_2024 > 10 ; assum4 <- n_2024*(1 - p_lightning_2024) > 10
 
 ```
-
-Confirmed here, all values of n are sufficiently large to use the central limit theorem tests.
-
-Testing hypothesis $H_{0}: p_{2024} \leq p_{2006}$ and $H_{A}: p_{2024} > p_{2006}$
+When multiplying $p*n$ and $(1-p)*n$ for the 2006 data and the 2024 data, we get the values 
+`r  paste(assum1, assum2, assum3, assum4` which are all greater than 10, thus we are able to use the parametric tests.
 
 ```{r}
 #############################  CALCULATING Z-observed ####################################
 phat <- (x_2006 + x_2024)/(n_2006 + n_2024)
 p1_min_p2 <- 0   #under the assumption of the null hypothesis
-Zobs <- ((p_lightning_2024 - p_lightning_2006) - p1_min_p2)/sqrt(phat*(1-phat)*(1/n_2024 + 1/n_2006))
+Zobs <- round(((p_lightning_2024 - p_lightning_2006) - p1_min_p2)/sqrt(phat*(1-phat)*(1/n_2024 + 1/n_2006)),4)
 pvalue <- round(1 - pnorm(Zobs),5)
-print(paste("The test statistic is:", round(Zobs,4), "The p-value is:", pvalue))
-
+#print(paste("The test statistic is:", round(Zobs,4), "The p-value is:", pvalue))
 ```
+We then transformed the difference in proportions to get the corresponding Z statistic for a standard normal curve. The calculated Z test statistic for our right sided hypothesis test is `r Zobs` (Figure \@ref(fig:normcurve)). This gives us a p-value of `r pvalue` which is less than our alpha of 0.05 (Figure \@ref(fig:normcurve)). Thus, we can reject the null hypothesis and conclude that the proportion of lightning caused wildfires in 2024 is significantly greater than the proportion from 2006.
 
-Therefore, because our p-value is less than our alpha of 0.05, we can conclude that the proportion of lightning caused wildfires in 2024 is significantly greater than the proportion from 2006.
-
-```{r, warning=FALSE, echo=FALSE}
+```{r, normcurve, warning=FALSE, echo=FALSE, fig.width=6, fig.height=4}
 #set up dataframe
 x <- seq(-5, 5,0.001)
 df_norm <- tibble(x = x, y = dnorm(x, mean = 0, sd = 1))
@@ -239,12 +231,11 @@ p <- df_norm %>%
    annotate(geom = "text", x = 5, y = 0.02, label = paste("p=", pvalue), size = 3, hjust = 1) +
   ggtitle(bquote("Right-Tailed Test for Lightning-Caused Wildfire Proportions H"[A] * ": p"[2024] > "p"[2006]),
           subtitle = "Standard Normal Curve") +
-  theme_minimal()
+  theme_minimal() +
+  theme(plot.title = element_text(size = 10), plot.subtitle = element_text(size = 8))
 print(p)
 ```
-
-Next, we will confirm our findings with a 95% Agresti-Coull Confidence interval for the difference in proportions, $p_{2024}-p_{2006}$.
-
+We then wanted to confirm our findings with a 95% Agresti-Coull Confidence interval for the difference in proportions, $p_{2024,lightning}-p_{2006,lightning}$.
 ```{r}
 ################## USING THE AGRESTI-COULL (+1/+2 METHOD) 95% CI ################################
 p_tilde_2024 <- (x_2024 + 1)/(n_2024 + 2)
@@ -258,21 +249,22 @@ SE <- sqrt(((p_tilde_2024)*(1-p_tilde_2024)/(n_2024 + 2)) +
 
 lb <- ptilde_diff - z * SE
 ub <- ptilde_diff + z * SE
-paste(round(lb, 4), "-", round(ub, 4))
+#paste(round(lb, 4), "-", round(ub, 4))
 # CONCLUSION : 2024 HAS A SIGNIFICANTLY HIGHER PROPORITON OF LIGHTNING-CAUSED WILDFIRES THAT 2006
 ```
-
-Our 95% confidence interval for $p_{2024}-p_{2006}$ lies between `r paste(round(lb, 4), "-", round(ub, 4))`. Both lower and upper bounds of our confidence interval are greater than 0, so this supports the above conclusion that the proportion of lightning caused wildfires from 2024 is significantly greater than that of 2006.
-
-Here is a visualization for our 95% confidence interval.
-
-```{r, warning=FALSE, echo=FALSE}
+Our 95% confidence interval for $p_{2024,lightning}-p_{2006,lightning}$ lies between `r paste(round(lb, 4), "to", round(ub, 4))`. Both lower and upper bounds of our confidence interval are greater than 0, so this supports the above conclusion that the proportion of lightning caused wildfires from 2024 is significantly greater than that of 2006.
+Below is a visualization for the 95% confidence interval for proportion differences, as well as the $\frac{+2}{+4}$ confidence interval for each singular proportion (Figure \@ref(fig:95CI)).
+```{r, 95CI, warning=FALSE, echo=FALSE}
 # Visualization
+
+ci_2006 <- prop.test(x_2006+2, n_2006+4, correct=F)$conf
+ci_2024 <- prop.test(x_2024+2, n_2024+4, correct=F)$conf
+
 plot_df <- tibble(
-  YEAR  = factor(c(2006, 2024, "Difference")),
+  YEAR  = factor(c(2006, 2024, "2024 - 2006")),
   prop  = c(p_lightning_2006, p_lightning_2024, p_lightning_2024-p_lightning_2006),
-  lower = c(NA, NA, lb),
-  upper = c(NA, NA, ub),
+  lower = c(ci_2006[[1]], ci_2006[[2]], lb),
+  upper = c(ci_2024[[1]], ci_2024[[2]], ub),
   n     = c(n_2006, n_2024, NA),
   x     = c(x_2006, x_2024, NA)
 )
@@ -280,8 +272,8 @@ plot_df <- tibble(
 ggplot(plot_df, aes(x = YEAR, y = prop, fill = YEAR)) +
   geom_col(width = 0.5, show.legend = FALSE) +
   geom_errorbar(aes(ymin = lower, ymax = upper), width = 0.15, linewidth = 0.8) +
-  geom_text(aes(label = ifelse(YEAR %in% c(2006, 2024), paste0("n=", n, "\nx=", x), NA)),
-            vjust = -0.9, size = 3.5) +
+  #geom_text(aes(label = ifelse(YEAR %in% c(2006, 2024), paste0("n=", n, "\nx=", x), NA)),
+  #          vjust = -0.9, size = 3.5) +
   scale_y_continuous(limits = c(0, 1), expand = c(0, 0)) +
   labs(
     title = "Proportion of Lightning-caused Wildfires (AC 95% CI)",
@@ -368,6 +360,12 @@ cat("Observations removed due to missing data:",
 [Suggest potential extensions of the study, alternative methods, or further investigations that could build on your
 findings.]
 
+\indent **Question 1:** The proportion of lightning-caused wildfires in 2024 is significantly greater than the proportion from 2006. This means that in fact, we are seeing quantifiable evidence that climate change is having a significant impact on the wildfire landscape in Canada. Either there is a greater frequency in lightning strikes due to changing weather conditions, or drought conditions and extreme heat is causing the forests to be drier and more flammable, or both. Our data however, does not make it possible to distinguish between which of these possibilities is the dominant factor. Future steps could be to include weather data to compare with the wildfire cause proportions. For example we could obtain lightning strike data and see if the frequency of lightning strikes is indeed increasing. If the frequency of strikes is not increasing, then we could likely attribute the increase in lightning-caused fires to drier conditions, and vise-versa. It would also be interesting to use this weather data and create a linear regression between proportion of lightning-caused fires as a function of frequency of lightning strikes for each year from 2006 to 2024, as this would also help to distinguish between the driving cause of lightning-caused fires (lightning itself, or highly flammable conditions).
+
+\indent Some limitations of this study could include that these wildfires are only those which occur in the FPA (forest protection area). Thus, it is possible that lightning-caused and non-lightning caused fires are occurring outside of these regions in Alberta, limiting the comprehensiveness of our scope of wildfire causes. However, this is the nature and drawback of sampling.
+
+\indent Ultimately, climate change can and will affect many domains of our lives. There is already quantifiable evidence that it is increasing the frequency of natural disasters like wildfires. This makes it up to people to decide if we want to heed the warnings of these growing trends and try to mitigate the impacts before they take an even greater toll on human lives and the environment.
+
 
 # References
 
@@ -377,53 +375,22 @@ findings.]
 Here is some additional code that was not shown in the report
 ```{r, warning=FALSE, echo=TRUE, results='hide', fig.show='hide'}
 # Visualization for difference in proportions
-plot_df <- tibble(
-  YEAR  = factor(c(2006, 2024, "Difference")),
-  prop  = c(p_lightning_2006, p_lightning_2024, p_lightning_2024-p_lightning_2006),
-  lower = c(NA, NA, lb),
-  upper = c(NA, NA, ub),
-  n     = c(n_2006, n_2024, NA),
-  x     = c(x_2006, x_2024, NA)
-)
 
-ggplot(plot_df, aes(x = YEAR, y = prop, fill = YEAR)) +
-  geom_col(width = 0.5, show.legend = FALSE) +
-  geom_errorbar(aes(ymin = lower, ymax = upper), width = 0.15, linewidth = 0.8) +
-  geom_text(aes(label = ifelse(YEAR %in% c(2006, 2024), paste0("n=", n, "\nx=", x), NA)),
-            vjust = -0.9, size = 3.5) +
-  scale_y_continuous(limits = c(0, 1), expand = c(0, 0)) +
-  labs(
-    title = "Proportion of Lightning-caused Wildfires (AC 95% CI)",
-    x = "Year",
-    y = "Proportion (Lightning)"
-  ) +
-  theme_minimal(base_size = 12)
 ```
 
 
 ```{r, warning=FALSE, echo=TRUE, results='hide', fig.show='hide'}
 #Script for right-tailed test visualization
-x <- seq(-5, 5,0.001)
-df_norm <- tibble(x = x, y = dnorm(x, mean = 0, sd = 1))
 
-#labels for lines
-labels_df <- tibble(x = c(qnorm(0.95), Zobs), y = 0.21,
-                 label = c(bquote(Z[0.05] == .(round(qnorm(0.95),2))), bquote(Z["obs"] == .(round(Zobs,2)))) )
-
-p <- df_norm %>%
-      ggplot(aes(x = x, y = y)) +
-            geom_line(linewidth = 1)+
-            geom_segment(aes(x = qnorm(0.95), xend = qnorm(0.95), y = 0, yend = 0.2),
-               linewidth = 1, color = "black") +
-            geom_segment(aes(x = Zobs, xend = Zobs, y = 0, yend = 0.2),
-               linewidth = 1, color = "black") +
-            geom_text(data = labels_df, aes(x = x, y = y, label = label), vjust = 0, hjust = 0, color = "black", parse=TRUE) +
-    #shade in areas
-   geom_area(data = subset(df_norm, x > qnorm(0.95)), aes(x = x, y = y), fill = "red", alpha = 0.3) +   # shade passed critical value
-   geom_area(data = subset(df_norm, x > Zobs), aes(x = x, y = y), fill = "blue", alpha = 1) +     #shade passed Zobs
-   annotate(geom = "text", x = 5, y = 0.02, label = paste("p=", pvalue), size = 3, hjust = 1) +
-  ggtitle(bquote("Right-Tailed Test for Lightning-Caused Wildfire Proportions H"[A] * ": p"[2024] > "p"[2006]),
-          subtitle = "Standard Normal Curve") +
-  theme_minimal()
-print(p)
 ```
+
+```{r, warning=FALSE, echo=TRUE, results='hide', fig.show='hide'}
+#code for pie charts.
+
+```
+
+
+```{r}
+#code for 
+```
+
