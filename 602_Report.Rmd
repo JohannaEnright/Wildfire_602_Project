@@ -1,10 +1,14 @@
 ---
 title: "Statistical Analysis of Alberta Wildfires from (2006 - 2024)"
-author: |
-  Group4: Johanna Enright - 30303537, Uyoyoumena Orona - 30295200,
-  Agambir Bandesha - 30302510, Ran Bi - 30301306
-date: "Date: `r Sys.Date()`"
-output: pdf_document
+author: "Group4: Johanna Enright - 30303537, Uyoyoumena Orona - 30295200,\nAgambir
+  Bandesha - 30302510, Ran Bi - 30301306\n"
+date: 'Date: `r Sys.Date()`'
+output:
+  pdf_document:
+    toc: true
+  bookdown::pdf_document2:
+    toc: true
+    number_sections: true
 bibliography: references.bib
 csl: apa.csl
 ---
@@ -12,15 +16,6 @@ csl: apa.csl
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
-```{r, include=FALSE}
-### Hey guys, lets use APA citation again. save any references in a bib
-#in-text citation is [@key] for example [@alberta_wildfire_dataset]
-getwd()
-list.files()
-```
-
-For example, here is our data set in-text citation [@alberta_wildfire_dataset] and the full citation will appear at the bottom.
 
 # Abstract
 - maybe we want an abstract (which we will write at the end)?
@@ -31,7 +26,7 @@ For example, here is our data set in-text citation [@alberta_wildfire_dataset] a
 
 # 1. Purpose
 ## Domain:
-\indent Our project looks at forest fire data in Alberta between 2006 and 2024. The data set gives information on total area burned, fire spread rate, causes of fires, as well as fire types, and time stamps and location coordinates [@wildfire_data_dictionary]{}. We are narrowing our focus down to specifically focus on how weather factors, like wind speed, contribute to fire spread rate as well as how the cause of fires (specifically lightning) may be changing over time due to climate change.
+\indent Our project looks at forest fire data in Alberta between 2006 and 2024. The data set gives information on total area burned, fire spread rate, causes of fires, as well as fire types, and time stamps and location coordinates [@alberta_wildfire_dataset]{}. We are narrowing our focus down to specifically focus on how weather factors, like wind speed, contribute to fire spread rate as well as how the cause of fires (specifically lightning) may be changing over time due to climate change.
 
 ## Investigation Goal:
 \indent **Question 1:** Research has indicated that the frequency of lightning caused forest fires is increasing due to climate change [@Beverly2024]{}. We want to see if the Alberta forest fire data corroborates this claim. We will compare the difference between the estimated proportion of lightning caused wildfires from 2024 to the estimated proportion of lightning caused wildfires from 2006 to see if the former is significantly larger than the latter.
@@ -76,7 +71,17 @@ $$
 H_{0} : 		p_{lightning, 2024} \leq p_{lightning, 2006} \\
 H_{A}: 	p_{lightning, 2024}  > p_{lightning, 2006}
 $$
+
 \indent **Question 2**: Wildfires are a persistent threat globally, with significant social, ecological, and economic impacts. Their spread and intensity result from complex interactions among fuels, topography, weather, and especially wind speed. This project will investigate the statistical relationship between wind speed and fire spread rate using historical wildfire data from 2006–2024. The primary research question asks: To what extent does wind speed predict the rate of wildfire spread? Understanding this relationship holds practical implications for fire behavior prediction, risk management, and the development of early warning systems for communities in wildfire-prone regions.
+
+The population of interest includes all historical wildfires recorded within the provided dataset, with key variables being fire spread rate and wind speed. Both variables have been observed and recorded during wildfire events, with data carefully logged.
+
+Wildfires are a recurring natural hazard in Alberta, Canada, where vast boreal forests, grasslands, and mixed-fuel landscapes are exposed to seasonal fire risk. Between 2006 and 2024, over 26,000 fire events were recorded in the Historical Wildfire Data data set [@alberta_wildfire_dataset].  This data set provides a unique opportunity to study the environmental drivers of fire behaviour in a consistent, long-term record.
+In Alberta, major fire events such as the 2016 Fort McMurray wildfire highlighted how fast-spreading fires can destroy thousands of structures, displace tens of thousands of people, and cost billions in recovery. Anticipating spread rate is therefore a central concern in wildfire management, where even small gains in prediction can inform life-saving interventions.
+Research shows that wildfire spread is influenced by a combination of fuels, weather, and topography [@nrcan2025].  Among these, wind speed is consistently identified as one of the strongest drivers. Higher winds tilt flames forward, enhance radiant and convective heating of unburned fuels, and carry embers downwind, which accelerates the head fire and can ignite spot fires well ahead of the main front [@rothermel1972]. 
+Wind speed is also operationally relevant because it constrains firefighting tactics. Strong winds reduce the accuracy and effectiveness of aerial suppression, causing water and retardant drops to drift away from the target [@fogarty1997; @plucinski2025]. They also increase risks to ground crews and limit the safe use of heavy equipment. Thus, understanding how spread responds to wind speed not only improves predictive science but also shapes suppression planning and resource allocation.
+In this project, we therefore hypothesize that wind speed will be a largely contributing factor to fire spread rate in Alberta. To test this, we will fit a simple linear regression model of the form: FIRE_SPREAD_RATE ~ WIND_SPEED
+
 \begin{center}
 $H_{0}:$ There is no correlation between wind speed and fire spread rate. \\
 $H_{A}:$ The alternative hypothesis is a correlation between wind speed and fire spread rate.
@@ -101,7 +106,7 @@ $$
 We will compute this confidence interval for $p_{lightning, 2024} - p_{lightning, 2006}$ and if both bounds of the confidence interval are above 0, this will confirm that we should reject the null hypothesis and conclude that $p_{lightning, 2024}  > p_{lightning, 2006}$. If the bounds encompass 0, we will conclude that there is no significant difference between $p_{lightning, 2024}  \text{ and } p_{lightning, 2006}$.
 
 \indent **Question 2** :
-We will investigate this topic further by performing a simple linear regression assessing fire spread rate as a function of wind speed.
+Our aim is to estimate the strength and nature of the relationship between wind speed and fire spread rate using a simple linear regression.
 $$
 Y_{i} = \beta_{0} + \beta_{1}x_{i} + \epsilon_{i}
 $$
@@ -119,31 +124,30 @@ The null hypothesis is $H_{0}:  \beta_{1} = 0$
 The alternative hypothesis is $H_{A}: \beta_{1} \ne 0$
 \end{flushleft}
 We will then assess the strength of the relationship using:
-- The estimated slope \beta_{1}
+- The estimated slope $\beta_{1}$
 - The coefficient of determination (R2), which measures how much of the variation in fire spread rate is explained by wind speed.
 In the end, we will also utilize a residual plot to assess our regression.
 
 
 
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE, include = FALSE}
+```{r, echo=FALSE, message=FALSE, warning=FALSE, include=FALSE}
 #put imported libraries here
 library(tidyverse)
 library(mosaic)
+library(bookdown)
 ```
 
-```{r, include=FALSE}
+```{r, include=FALSE, cache=TRUE}
 #read in wildfire csv file
 url <- "https://raw.githubusercontent.com/JohannaEnright/Wildfire_602_Project/refs/heads/main/fp-historical-wildfire-data-2006-2024.csv"
 df = read_csv(url, show_col_types = F)
 ```
 
 # 5. Results
-## Question 1: Is the proportion of lightning-caused wildfires from 2024 significantly greater than those from 2006?
 
-Here we will acquire the proportion data for lightning caused wild fires in 2006 and 2024.
-
-```{r, echo=FALSE}
+We will investigate our initial question to see if the proportion of lightning-caused forest fires is significantly greater in 2024 than it is in 2006.
+```{r, echo=FALSE, cache=TRUE}
 ####### determining proportion for lightning caused fires in 2006 and 2024  #######
 
 #2006
@@ -157,16 +161,42 @@ df_2024 <- df %>%  filter(YEAR == 2024)
 n_2024 <- nrow(df_2024)
 x_2024 <- df_2024 %>% filter(GENERAL_CAUSE == "Lightning") %>% nrow() #x is number of fires caused by lightning
 p_lightning_2024 <- x_2024/n_2024
-
-print(paste("The 2006 proportion is", round(p_lightning_2006,4) ," and the 2024 proportion is", round(p_lightning_2024,4)))
+#print(paste("The 2006 proportion is", round(p_lightning_2006,4) ," and the 2024 proportion is", round(p_lightning_2024,4)))
 ```
+The initial sample proportions for each year are `r round(p_lightning_2006,2)` and `r round(p_lightning_2024,2)` for the year 2006 and 2024 respectively (Figure \@ref(fig:piechart)).
+
+```{r, piechart, echo=FALSE, fig.width=6, fig.height=6, fig.cap="Proportion of Lightning-Caused Fires in 2006 and 2024", cache=TRUE}
+#code to make pie chart to show initial proportions
+df_count <- tibble(year = c(2006, 2006, 2024, 2024),
+            category = c("Lightning", "Other", "Lightning", "Other") ,
+            count = c(x_2006, n_2006-x_2006, x_2024, n_2024-x_2024),
+            percents = c(round(p_lightning_2006*100,1), round((1-p_lightning_2006)*100,1),
+                         round(p_lightning_2024*100,1), round((1-p_lightning_2024)*100,1))
+            )
+
+df_count %>% 
+ # filter(year == 2006) %>% 
+  ggplot(aes(x = "", y = percents, fill = category)) +
+  geom_bar(stat = "identity", width = 1) +   # Make bar chart
+  coord_polar(theta = "y") +                 # Convert to polar coordinates
+  geom_text(aes(label = paste0(percents, "%")),
+            position = position_stack(vjust = 0.5)) +
+  facet_wrap(~year) +
+ # ggtitle("Proportion of Lightning-Caused Fires in 2006 and 2024") +
+  theme_void() +                               # Remove background/axes 
+  theme(plot.title = element_text(hjust = 0.5,
+        margin = margin(b = 15))   # adjust vertical position
+  )
+  
+```
+
 
 Next we will confirm that our data follows the assumptions necessary to use a parametric test. (i.e. that n is sufficiently large under the central limit theorem).
 
-```{r}
+```{r, asummptiontest1, include=FALSE, cache=TRUE}
 ## confirming it follows assumtions (np > 10) , (nq > 10)   # is sufficiently large.
-n_2006*p_lightning_2006 >10 ; n_2006*(1 - p_lightning_2006) > 10 ## greater than 10
-n_2024*p_lightning_2024 > 10 ; n_2024*(1 - p_lightning_2024) > 10
+assum_1 <- n_2006*p_lightning_2006 >10 ; assum_2 <- n_2006*(1 - p_lightning_2006) > 10 ## greater than 10
+assum_3 <- n_2024*p_lightning_2024 > 10 ; assum_4 <- n_2024*(1 - p_lightning_2024) > 10
 
 ```
 
@@ -176,11 +206,8 @@ Testing hypothesis $H_{0}: p_{2024} \leq p_{2006}$ and $H_{A}: p_{2024} > p_{200
 
 ```{r}
 #############################  CALCULATING Z-observed ####################################
-# Zobs = ((phat1 - phat2) - (p1 - p2)) / sqrt(phat*(1-phat)*(1/n1 + 1/n2))
-
 phat <- (x_2006 + x_2024)/(n_2006 + n_2024)
 p1_min_p2 <- 0   #under the assumption of the null hypothesis
-
 Zobs <- ((p_lightning_2024 - p_lightning_2006) - p1_min_p2)/sqrt(phat*(1-phat)*(1/n_2024 + 1/n_2006))
 pvalue <- round(1 - pnorm(Zobs),5)
 print(paste("The test statistic is:", round(Zobs,4), "The p-value is:", pvalue))
@@ -220,9 +247,6 @@ Next, we will confirm our findings with a 95% Agresti-Coull Confidence interval 
 
 ```{r}
 ################## USING THE AGRESTI-COULL (+1/+2 METHOD) 95% CI ################################
-# (ptilde1 - ptilde2) +/-  (z (1 - alpha/2)) * sqrt((ptilde1*qtilde1/(n1 + 2)) + (ptilde2*qtilde2)/(n2 + 2))
-#p_tilde = (x + 1)/ (n + 2)
-
 p_tilde_2024 <- (x_2024 + 1)/(n_2024 + 2)
 p_tilde_2006 <- (x_2006 + 1)/(n_2006 + 2)
 
@@ -270,8 +294,69 @@ ggplot(plot_df, aes(x = YEAR, y = prop, fill = YEAR)) +
 ```
 
 ## Question 2
+```{r, cache=TRUE}
+# Create a clean dataset with only complete cases
+wildfire_clean = df %>%  filter(!is.na(WIND_SPEED) & !is.na(FIRE_SPREAD_RATE))
+# Use the clean dataset
+lm_model = lm(FIRE_SPREAD_RATE ~ WIND_SPEED, data = wildfire_clean)
+summary(lm_model)
+```
 
--   Agam and Mena, you guys can do your analyses here.
+```{r, echo=FALSE, cache=TRUE}
+# This is used to check the detailed statistics about my model such as the 
+# Coefficients which is the relationship between wind speed and fire spread rate 
+# R-squared: how well wind speed explains fire spread(0 = no relationship, 1 = perfect relationship)
+# P-value : whether the relationship is statistically significant
+
+# Plot with clean data (no warnings!)
+ggplot(wildfire_clean, aes(x = WIND_SPEED, y = FIRE_SPREAD_RATE)) +
+  geom_point(alpha = 0.6) +
+  geom_smooth(method = "lm", se = TRUE, col = "blue") +
+  labs(title = "Fire Spread Rate vs Wind Speed",
+       x = "Wind Speed",
+       y = "Fire Spread Rate")
+# Residual is the difference between what your model predicted and what actually happened.
+# Fitted values is what my model predicted for fire spread rate
+
+# Residual plot (ggplot2)
+resid_df = data.frame(fitted = lm_model$fitted.values,
+                       resid = lm_model$residuals)
+
+ggplot(resid_df, aes(x = fitted, y = resid)) +
+  geom_point(alpha = 0.6) +
+  geom_hline(yintercept = 0, col = "red", linetype = "dashed") +
+  labs(title = "Residual Plot",
+       x = "Fitted Values (Predicted Fire Spread Rate)",
+       y = "Residuals")
+
+# Sample size information
+cat("Total observations in dataset:", nrow(df), "\n")
+cat("Complete cases used in analysis:", nrow(wildfire_clean), "\n")
+cat("Observations removed due to missing data:", 
+    nrow(df) - nrow(wildfire_clean), "\n")
+```
+
+
+```{r, echo=FALSE, cache=TRUE}
+# Residual plot (ggplot2)
+resid_df = data.frame(fitted = lm_model$fitted.values,
+                       resid = lm_model$residuals)
+
+ggplot(resid_df, aes(x = fitted, y = resid)) +
+  geom_point(alpha = 0.6) +
+  geom_hline(yintercept = 0, col = "red", linetype = "dashed") +
+  labs(title = "Residual Plot",
+       x = "Fitted Values (Predicted Fire Spread Rate)",
+       y = "Residuals")
+
+# Sample size information
+cat("Total observations in dataset:", nrow(df), "\n")
+cat("Complete cases used in analysis:", nrow(wildfire_clean), "\n")
+cat("Observations removed due to missing data:", 
+    nrow(df) - nrow(wildfire_clean), "\n")
+
+```
+
 
 
 # Conclusion And Future Work
@@ -289,8 +374,8 @@ findings.]
 
 #Appendix
 
-
-```{r, warning=FALSE, include=FALSE}
+Here is some additional code that was not shown in the report
+```{r, warning=FALSE, echo=TRUE, results='hide', fig.show='hide'}
 # Visualization for difference in proportions
 plot_df <- tibble(
   YEAR  = factor(c(2006, 2024, "Difference")),
@@ -316,7 +401,7 @@ ggplot(plot_df, aes(x = YEAR, y = prop, fill = YEAR)) +
 ```
 
 
-```{r, warning=FALSE, echo=FALSE}
+```{r, warning=FALSE, echo=TRUE, results='hide', fig.show='hide'}
 #Script for right-tailed test visualization
 x <- seq(-5, 5,0.001)
 df_norm <- tibble(x = x, y = dnorm(x, mean = 0, sd = 1))
