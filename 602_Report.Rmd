@@ -1,11 +1,18 @@
 ---
 title: "Statistical Analysis of Alberta Wildfires from (2006 - 2024)"
-author: "Group4: Johanna Enright - 30303537, Uyoyoumena Orona - 30295200,\nAgambir
-  Bandesha - 30302510, Ran Bi - 30301306\n"
-date: 'Date: `r Sys.Date()`'
+author: |
+  Group 4:  
+  Johanna Enright – 30303537  
+  Uyoyoumena Orona – 30295200  
+  Agambir Bandesha – 30302510  
+  Ran Bi – 30301306
+date: "Date: `r Sys.Date()`"
 output:
-  pdf_document:
   bookdown::pdf_document2:
+    toc: false
+header-includes:
+  - \usepackage{indentfirst}
+  - \setlength{\parindent}{2em}
 bibliography: references.bib
 csl: apa.csl
 ---
@@ -14,84 +21,105 @@ csl: apa.csl
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Abstract
-- maybe we want an abstract (which we will write at the end)?
-
 # Introduction
 
-\indent In Canada and across the world, we have seen an increase in forest area burned due to forest fires, with 2023 being an a record breaking year in forest damage for Canada [@MacCarthy2025]. Climate change is the main culprit, with changing weather patterns bringing heatwaves and drought which makes forests more easily ignitable than in the past [@MacCarthy2025].  Wildfires can be devastating to the forest ecosystem, but they also can have large ramifications on the economy and human health [@SadofAlexander2023]. When forests are burned, carbon dioxide is released into the air, further exacerbating our climate crisis and creating a positive feedback loop for future disastrous wildfires [@SadofAlexander2023]. Scientists have made significant efforts to understand forest fire dynamics allowing for improved forest fire mitigation and combative tactics *cite?*. However, it is of great importance to continue to research and understand how the forest fire landscape in Canada is changing so we can be better prepared to mitigate the environmental, economic, and social damages they will cause.
+In Canada and across the world, we have seen an increase in forest area burned due to forest fires, with 2023 being an a record breaking year in forest damage for Canada [@MacCarthy2025]. Climate change is the main culprit, with changing weather patterns bringing heatwaves and drought which makes forests more easily ignitable than in the past [@MacCarthy2025].  Wildfires can be devastating to the forest ecosystem, but they also can have large ramifications on the economy and human health [@SadofAlexander2023]. When forests are burned, carbon dioxide is released into the air, further exacerbating our climate crisis and creating a positive feedback loop for future disastrous wildfires [@SadofAlexander2023]. Scientists have made significant efforts to understand forest fire dynamics allowing for improved forest fire mitigation and combative tactics *cite?*. However, it is of great importance to continue to research and understand how the forest fire landscape in Canada is changing so we can be better prepared to mitigate the environmental, economic, and social damages they will cause.
 
 # 1. Purpose
 ## Domain:
-\indent Our project looks at forest fire data in Alberta between 2006 and 2024. The data set gives information on total area burned, fire spread rate, causes of fires, as well as fire types, and time stamps and location coordinates [@alberta_wildfire_dataset]{}. We are narrowing our focus down to specifically focus on how weather factors, like wind speed, contribute to fire spread rate as well as how the cause of fires (specifically lightning) may be changing over time due to climate change.
+Our project looks at forest fire data in Alberta between 2006 and 2024. The data set gives information on total area burned, fire spread rate, causes of fires, as well as fire types, and time stamps and location coordinates [@alberta_wildfire_dataset]{}. We are narrowing our focus down to specifically focus on how weather factors, like wind speed, contribute to fire spread rate as well as how the cause of fires (specifically lightning) may be changing over time due to climate change.
 
 ## Investigation Goal:
-\indent **Question 1:** Research has indicated that the frequency of lightning caused forest fires is increasing due to climate change [@Beverly2024]{}. We want to see if the Alberta forest fire data corroborates this claim. We will compare the difference between the estimated proportion of lightning caused wildfires from 2024 to the estimated proportion of lightning caused wildfires from 2006 to see if the former is significantly larger than the latter.
 
-\indent **Question 2:** There are a variety of environmental factors which affect how quickly a fire spreads, ultimately contributing to the overall impact and environmental burden that a forest fire has on its surrounding area. We are investigating how one key weather variable, wind speed, affects the fire spread rate.
+**Question 1:** Research has indicated that the frequency of lightning caused forest fires is increasing due to climate change [@Beverly2024]{}. We want to see if the Alberta forest fire data corroborates this claim. We will compare the difference between the estimated proportion of lightning caused wildfires from 2024 to the estimated proportion of lightning caused wildfires from 2006 to see if the former is significantly larger than the latter.
+
+**Question 2:** There are a variety of environmental factors which affect how quickly a fire spreads, ultimately contributing to the overall impact and environmental burden that a forest fire has on its surrounding area. We are investigating how one key weather variable, wind speed, affects the fire spread rate.
 
 ## Practical Implications:    #We can expand on this section
-\indent **Question 1**: By examining how the proportion of lightning-caused wildfires has changed over time, we can assess one way in which climate change is reshaping wildfire patterns. In Canada, lightning already causes almost half of all wildfires and accounts for about 90% of burned forest area [@Coogan2025]{}. Climate change is increasing both lightning frequency and the amount of dry, flammable debris in forests [@phac2024]{}, suggesting more lightning-driven fires in the future. Examining these trends helps estimate climate impacts, inform on fossil fuel emission-reduction policies, and guide forest management practices such as prescribed burning [@Parks2025]{}.
+**Question 1**: By examining how the proportion of lightning-caused wildfires has changed over time, we can assess one way in which climate change is reshaping wildfire patterns. In Canada, lightning already causes almost half of all wildfires and accounts for about 90% of burned forest area [@Coogan2025]{}. Climate change is increasing both lightning frequency and the amount of dry, flammable debris in forests [@phac2024]{}, suggesting more lightning-driven fires in the future. Examining these trends helps estimate climate impacts, inform on fossil fuel emission-reduction policies, and guide forest management practices such as prescribed burning [@Parks2025]{}.
 
-\indent **Question 2**: We are investigating how wind speed affects fire spread. In reality, wildfire models also include factors like humidity, temperature, topography, and fuel type (Natural Resources Canada, 2025). Understanding how wind accelerates the rate of fire spread helps predict fire risk to communities and habitats, guide evacuation needs, and assess environmental and economic impacts. High winds can also reduce the effectiveness of aerial fire suppression, making wind speed a key factor to understand in wildfire management [@shmuel2023]{}.
+**Question 2**: We are investigating how wind speed affects fire spread. In reality, wildfire models also include factors like humidity, temperature, topography, and fuel type (Natural Resources Canada, 2025). Understanding how wind accelerates the rate of fire spread helps predict fire risk to communities and habitats, guide evacuation needs, and assess environmental and economic impacts. High winds can also reduce the effectiveness of aerial fire suppression, making wind speed a key factor to understand in wildfire management [@shmuel2023]{}.
 
 ## Population(s) of Interest:
-\indent Our forest fire data set looks at wildfires in Alberta between 2006 and 2024. Specifically this data includes wildfires only occurring within the FPA (forest protection area), either provincial or federally owned/managed lands.
-For question 1, we will investigate forest fires in 2006 and 2024, with 1954 and 1230 wildfire entries, respectively. We will be comparing forest fires caused by lightning to those caused by all non-natural human activity.
-For question 2, we will study all forest fire entries that contain information for fire spread rate and wind speed. This accounts for around 89% $\frac{23657}{26551}$ of data entries.
+
+Our forest fire data set looks at wildfires in Alberta between 2006 and 2024. Specifically this data includes wildfires only occurring within the FPA (forest protection area), either provincial or federally owned/managed lands.
+
+**Question 1:** We will investigate forest fires in 2006 and 2024, with 1954 and 1230 wildfire entries, respectively. We will be comparing forest fires caused by lightning to those caused by all non-natural human activity.
+
+**Question 2:** we will study all forest fire entries that contain information for fire spread rate and wind speed. This accounts for around 89% $\frac{23657}{26551}$ of data entries.
 
 ## Variables of Interest:
-\indent **Question 1:** The variables we will analyze are fires within the “GENERAL_CAUSE” column of the data set which are “Lightning” (1 Success). All other fires within the “GENERAL_CAUSE” column which are not “Lightning” will be considered a 0 (Failure). We will analyze this variable for fires in the “YEAR” 2024 and compare it to fires from the “YEAR” 2006.
-\indent **Question 2**: For the linear regression, our independent (x) variable will be the numerical variable “WIND_SPEED” (in km/h) and our dependant (y) variable will be the numerical variable “FIRE_SPREAD_RATE” (in m/min).
+
+**Question 1:** The variables we will analyze are fires within the “GENERAL_CAUSE” column of the data set which are “Lightning” (1 Success). All other fires within the “GENERAL_CAUSE” column which are not “Lightning” will be considered a 0 (Failure). We will analyze this variable for fires in the “YEAR” 2024 and compare it to fires from the “YEAR” 2006.
+
+**Question 2**: For the linear regression, our independent (x) variable will be the numerical variable “WIND_SPEED” (in km/h) and our dependant (y) variable will be the numerical variable “FIRE_SPREAD_RATE” (in m/min).
 
 ## Data Collection Method:
-\indent **Quesetion 1**. The “GENERAL_CAUSE” of wildfires is investigated by Alberta wildfire officials. Wildfires under investigation where the cause was not determined were labelled “Undetermined”.
-\indent *Question 2*. “FIRE_SPREAD_RATE” and “WIND_SPEED” were recorded at the time of initial fire assessment. The exact assessors are Alberta Wildfire personnel and are indicated in the “ASSESSMENT_RESOURCE” column of the data set who assessed the fire at the recorded “ASSESSMENT_DATETIME”. Assessors include “air attack officer”, “initial action forces”, “wildfire assessor”, or “other”. More details on these assessment positions can be found in the Historical Wildfire Data Dictionary [@wildfire_data_dictionary].
+
+**Quesetion 1**. The “GENERAL_CAUSE” of wildfires is investigated by Alberta wildfire officials. Wildfires under investigation where the cause was not determined were labelled “Undetermined”.
+
+**Question 2**. “FIRE_SPREAD_RATE” and “WIND_SPEED” were recorded at the time of initial fire assessment. The exact assessors are Alberta Wildfire personnel and are indicated in the “ASSESSMENT_RESOURCE” column of the data set who assessed the fire at the recorded “ASSESSMENT_DATETIME”. Assessors include “air attack officer”, “initial action forces”, “wildfire assessor”, or “other”. More details on these assessment positions can be found in the Historical Wildfire Data Dictionary [@wildfire_data_dictionary].
 
 # 2. Data
 ## Source of Data:
-\indent This data comes from the Government of Alberta official website, published by Forestry and Parks. The full data set name is Historical wildfire data: 2006 to 2024.
+
+This data comes from the Government of Alberta official website, published by Forestry and Parks. The full data set name is Historical wildfire data: 2006 to 2024.
 
 ## Data Characteristics:
-**[Describe the nature of the data (e.g., categorical, continuous, time-series, text/unstructured) and the primary variables you will be using]**
-**New section**
+**Question 1:** 
+Question 1 uses categorical data “GENERAL_CAUSE” for which there are 15 categories: "Resident",            "Incendiary", "Other Industry", "Undetermined", "Forest Industry", "Lightning", "Recreation",           "Restart", "Oil & Gas Industry", "Power Line Industry", "Railroad", "Prescribed Fire",
+"Agriculture Industry", "Government", and "Under Investigation". We will turn these into a binary category by making "Lightning" one category, and everything else a second category. 
+Question 1 also uses "YEAR" which contains discrete numerical variables from 2006 to 2024. From these we will choose only the variables "2006" and "2024".
+
+**Question 2:**
+Question 2 uses continuous numerical variables: "FIRE_SPREAD_RATE" and "WIND_SPEED".
 
 ## Permission/Accessibility:
-\indent This data set contains information licensed under the Open Government Licence - Alberta. This worldwide, royalty-free, perpetual, non-exclusive license allows us to copy, modify, publish, translate, adapt, distribute or otherwise use the information in any medium, mode or format for any lawful purpose [@albertaopendata]{}.
+
+This data set contains information licensed under the Open Government Licence - Alberta. This worldwide, royalty-free, perpetual, non-exclusive license allows us to copy, modify, publish, translate, adapt, distribute or otherwise use the information in any medium, mode or format for any lawful purpose [@albertaopendata]{}.
 
 ## Time Frame of Data Collection :
-\indent Data was collected from 2006-01-01 to 2024-12-31. The resource was created on 2020-01-09 and was last modified on 2025-01-31. Updates to this data set are irregular in frequency.
+
+Data was collected from 2006-01-01 to 2024-12-31. The resource was created on 2020-01-09 and was last modified on 2025-01-31. Updates to this data set are irregular in frequency.
 
 # 3. Topic(s) to Investigate
-\indent **Question 1**:  We want to see if the proportion of lightning caused wildfires from 2024 is significantly greater than the proportion of lightning caused wildfires from 2006. We hypothesize that 2024 will have a significantly higher proportion than wildfires from 2006 due to climate change which has resulted in a higher frequency of lightning strikes, and drier forest conditions beneficial for fire ignition upon a lightning strike. We will assess if $p_{lightning, 2024} > p_{lightning, 2006}$  as outlined by our hypotheses below.
-$$
+
+**Question 1**:  We want to see if the proportion of lightning caused wildfires from 2024 is significantly greater than the proportion of lightning caused wildfires from 2006. We hypothesize that 2024 will have a significantly higher proportion than wildfires from 2006 due to climate change which has resulted in a higher frequency of lightning strikes, and drier forest conditions beneficial for fire ignition upon a lightning strike. We will assess if $p_{lightning, 2024} > p_{lightning, 2006}$  as outlined by our hypotheses below.
+\[
+\begin{aligned}
 H_{0} : 		p_{lightning, 2024} \leq p_{lightning, 2006} \\
 H_{A}: 	p_{lightning, 2024}  > p_{lightning, 2006}
-$$
+\end{aligned}
+\]
 
-\indent **Question 2**: Wildfires are a persistent threat globally, with significant social, ecological, and economic impacts. Their spread and intensity result from complex interactions among fuels, topography, weather, and especially wind speed. This project will investigate the statistical relationship between wind speed and fire spread rate using historical wildfire data from 2006–2024. The primary research question asks: To what extent does wind speed predict the rate of wildfire spread? Understanding this relationship holds practical implications for fire behavior prediction, risk management, and the development of early warning systems for communities in wildfire-prone regions.
+**Question 2**: Wildfires are a persistent threat globally, with significant social, ecological, and economic impacts. Their spread and intensity result from complex interactions among fuels, topography, weather, and especially wind speed. This project will investigate the statistical relationship between wind speed and fire spread rate using historical wildfire data from 2006–2024. The primary research question asks: To what extent does wind speed predict the rate of wildfire spread? Understanding this relationship holds practical implications for fire behavior prediction, risk management, and the development of early warning systems for communities in wildfire-prone regions.
 
-The population of interest includes all historical wildfires recorded within the provided dataset, with key variables being fire spread rate and wind speed. Both variables have been observed and recorded during wildfire events, with data carefully logged.
+The population of interest includes all historical wildfires recorded within the provided data set, with key variables being fire spread rate and wind speed. Both variables have been observed and recorded during wildfire events, with data carefully logged.
 
 Wildfires are a recurring natural hazard in Alberta, Canada, where vast boreal forests, grasslands, and mixed-fuel landscapes are exposed to seasonal fire risk. Between 2006 and 2024, over 26,000 fire events were recorded in the Historical Wildfire Data data set [@alberta_wildfire_dataset].  This data set provides a unique opportunity to study the environmental drivers of fire behaviour in a consistent, long-term record.
 In Alberta, major fire events such as the 2016 Fort McMurray wildfire highlighted how fast-spreading fires can destroy thousands of structures, displace tens of thousands of people, and cost billions in recovery. Anticipating spread rate is therefore a central concern in wildfire management, where even small gains in prediction can inform life-saving interventions.
+
 Research shows that wildfire spread is influenced by a combination of fuels, weather, and topography [@nrcan2025].  Among these, wind speed is consistently identified as one of the strongest drivers. Higher winds tilt flames forward, enhance radiant and convective heating of unburned fuels, and carry embers downwind, which accelerates the head fire and can ignite spot fires well ahead of the main front [@rothermel1972]. 
+
 Wind speed is also operationally relevant because it constrains firefighting tactics. Strong winds reduce the accuracy and effectiveness of aerial suppression, causing water and retardant drops to drift away from the target [@fogarty1997; @plucinski2025]. They also increase risks to ground crews and limit the safe use of heavy equipment. Thus, understanding how spread responds to wind speed not only improves predictive science but also shapes suppression planning and resource allocation.
+
 In this project, we therefore hypothesize that wind speed will be a largely contributing factor to fire spread rate in Alberta. To test this, we will fit a simple linear regression model of the form: FIRE_SPREAD_RATE ~ WIND_SPEED
 
-\begin{center}
+\begin{flushleft}
 $H_{0}:$ There is no correlation between wind speed and fire spread rate. \\
 $H_{A}:$ The alternative hypothesis is a correlation between wind speed and fire spread rate.
-\end{center}
+\end{flushleft}
 
 # 4. Statistical Methods
 ## Planned Methods:
-\indent **Question 1** : We will use a classical right sided Z test for proportions to determine if $p_{lightning, 2024} > p_{lightning, 2006}$ as determined by the formula:
+
+**Question 1** : We will use a classical right sided Z test for proportions to determine if $p_{lightning, 2024} > p_{lightning, 2006}$ as determined by the formula:
 $$
 Z_{obs}=\frac{(\widehat{p}_{1}-\widehat{p}_{2})-(p_{1}-p_{2})}{(p(1-p)(\frac{1}{n_{1}}+\frac{1}{n_{1}})}   \\
 \text{where }	p=\frac{x_{1}+x_{2}}{n_{1} + n_{2}}  \quad
 \text{  and }\quad p_{1}-p_{2} = 0  \text{ under the null hypothesis.}
 $$
+
 We will reject the null hypothesis if $p < 0.05$. We have confirmed that the conditions to use this method are met. Our variables  $p_{lightning, 2024} > p_{lightning, 2006}$  are from independent samples. Our n values are sufficiently large with $n_{2024} = 1230 \text{ and } n_{2006} = 1954$ to use parametric tests relying on the central limit theorem.
 To confirm our methods, we will also use the conventional $\frac{+1}{+2}$ Agresti-coull confidence interval for the difference between proportions.
 $$
@@ -100,29 +128,31 @@ z_{1-2/\alpha}
 \sqrt{\frac{\tilde{p}_{1}(1-\tilde{p}_{1})}{n_{1}+2}+\frac{\tilde{p}_{2}(1-\tilde{p}_{2})}{n_{2} + 2}} \\
 \text{where}\quad	\tilde{p}_{1} = \frac{X_{1}+1}{n_1+2}  \quad\text{and}\quad    \tilde{p}_{2} =\frac{ X_{2}+1}{n_2+2}
 $$
+
 We will compute this confidence interval for $p_{lightning, 2024} - p_{lightning, 2006}$ and if both bounds of the confidence interval are above 0, this will confirm that we should reject the null hypothesis and conclude that $p_{lightning, 2024}  > p_{lightning, 2006}$. If the bounds encompass 0, we will conclude that there is no significant difference between $p_{lightning, 2024}  \text{ and } p_{lightning, 2006}$.
 
-\indent **Question 2** :
-Our aim is to estimate the strength and nature of the relationship between wind speed and fire spread rate using a simple linear regression.
+**Question 2** : Our aim is to estimate the strength and nature of the relationship between wind speed and fire spread rate using a simple linear regression.
 $$
 Y_{i} = \beta_{0} + \beta_{1}x_{i} + \epsilon_{i}
 $$
-\begin{flushleft}
-where: \\
-* $i =$ fire spread rate for the $i_{th}$ observation. \\
-* $x_{i} =$ wind speed for the $i_{th}$ observation. \\
-* $\beta_{0}$ = intercept (the estimated fire spread rate when wind speed is 0). \\
-* $\beta_{1}$ = slope (the expected change in fire spread rate for a one-unit increase in wind speed). \\
+
+where: 
+* $i =$ fire spread rate for the $i_{th}$ observation. 
+* $x_{i} =$ wind speed for the $i_{th}$ observation. 
+* $\beta_{0}$ = intercept (the estimated fire spread rate when wind speed is 0). 
+* $\beta_{1}$ = slope (the expected change in fire spread rate for a one-unit increase in wind speed). 
 * $\epsilon_{i}$ = random error term accounting for variation not explained by wind speed.
-\end{flushleft}
+
+
 We will estimate $\beta_{0}$ and $\beta_{1}$ using least squares regression, which minimizes the sum of squared differences between observed fire spread rates and predicted values.
 \begin{flushleft}
-The null hypothesis is $H_{0}:  \beta_{1} = 0$
+The null hypothesis is $H_{0}:  \beta_{1} = 0$ \\
 The alternative hypothesis is $H_{A}: \beta_{1} \ne 0$
 \end{flushleft}
+
 We will then assess the strength of the relationship using:
 - The estimated slope $\beta_{1}$
-- The coefficient of determination (R2), which measures how much of the variation in fire spread rate is explained by wind speed.
+- The coefficient of determination ($R^2$), which measures how much of the variation in fire spread rate is explained by wind speed.
 In the end, we will also utilize a residual plot to assess our regression.
 
 
@@ -136,7 +166,7 @@ library(bookdown)
 library(binom)
 ```
 
-```{r, include=FALSE, cache=TRUE}
+```{r, include=FALSE}
 #read in wildfire csv file
 url <- "https://raw.githubusercontent.com/JohannaEnright/Wildfire_602_Project/refs/heads/main/fp-historical-wildfire-data-2006-2024.csv"
 df = read_csv(url, show_col_types = F)
@@ -144,7 +174,7 @@ df = read_csv(url, show_col_types = F)
 
 # 5. Results
 We will investigate our initial question to see if the proportion of lightning-caused forest fires is significantly greater in 2024 than it is in 2006.
-```{r, echo=FALSE, cache=TRUE}
+```{r, echo=FALSE}
 ####### determining proportion for lightning caused fires in 2006 and 2024  #######
 
 #2006
@@ -162,7 +192,7 @@ p_lightning_2024 <- x_2024/n_2024
 ```
 The initial sample proportions for each year are `r round(p_lightning_2006,2)` and `r round(p_lightning_2024,2)` for the year 2006 and 2024 respectively (Figure \@ref(fig:piechart)).
 
-```{r, piechart, echo=FALSE, fig.width=6, fig.height=6, fig.cap="Proportion of Lightning-Caused Fires in 2006 and 2024", cache=TRUE}
+```{r, piechart, echo=FALSE, fig.width=6, fig.height=6, fig.cap="Proportion of Lightning-Caused Fires in 2006 and 2024"}
 #code to make pie chart to show initial proportions
 df_count <- tibble(year = c(2006, 2006, 2024, 2024),
             category = c("Lightning", "Other", "Lightning", "Other") ,
@@ -189,14 +219,14 @@ ggsave("../plots/pieprops.png", plot = pies, scale = 2, width = 6, height = 6, u
 ```
 
 We have confirmed that our data follows the necessary assumptions required for parametric tests.
-```{r, asummptiontest1, include=FALSE, cache=TRUE}
+```{r, asummptiontest1, include=FALSE}
 ## confirming it follows assumtions (np > 10) , (nq > 10)   # is sufficiently large.
-assum1 <- rn_2006*p_lightning_2006 >10 ; assum2 <- n_2006*(1 - p_lightning_2006) > 10 ## greater than 10
-assum3 <- n_2024*p_lightning_2024 > 10 ; assum4 <- n_2024*(1 - p_lightning_2024) > 10
+assum1 <- n_2006*p_lightning_2006 ; assum2 <- n_2006*(1 - p_lightning_2006) ## greater than 10
+assum3 <- n_2024*p_lightning_2024 ; assum4 <- n_2024*(1 - p_lightning_2024)
 
 ```
 When multiplying $p*n$ and $(1-p)*n$ for the 2006 data and the 2024 data, we get the values 
-`r  paste(assum1, assum2, assum3, assum4` which are all greater than 10, thus we are able to use the parametric tests.
+`r  c(assum1, assum2, assum3, assum4)` which are all greater than 10, thus we are able to use the parametric tests.
 
 ```{r}
 #############################  CALCULATING Z-observed ####################################
@@ -208,7 +238,7 @@ pvalue <- round(1 - pnorm(Zobs),5)
 ```
 We then transformed the difference in proportions to get the corresponding Z statistic for a standard normal curve. The calculated Z test statistic for our right sided hypothesis test is `r Zobs` (Figure \@ref(fig:normcurve)). This gives us a p-value of `r pvalue` which is less than our alpha of 0.05 (Figure \@ref(fig:normcurve)). Thus, we can reject the null hypothesis and conclude that the proportion of lightning caused wildfires in 2024 is significantly greater than the proportion from 2006.
 
-```{r, normcurve, warning=FALSE, echo=FALSE, fig.width=6, fig.height=4}
+```{r, normcurve, warning=FALSE, echo=FALSE, fig.width=6, fig.height=4, fig.cap="Right-Tailed Test for Lightning-Caused Wildfire Proportions"}
 #set up dataframe
 x <- seq(-5, 5,0.001)
 df_norm <- tibble(x = x, y = dnorm(x, mean = 0, sd = 1))
@@ -254,14 +284,14 @@ ub <- ptilde_diff + z * SE
 ```
 Our 95% confidence interval for $p_{2024,lightning}-p_{2006,lightning}$ lies between `r paste(round(lb, 4), "to", round(ub, 4))`. Both lower and upper bounds of our confidence interval are greater than 0, so this supports the above conclusion that the proportion of lightning caused wildfires from 2024 is significantly greater than that of 2006.
 Below is a visualization for the 95% confidence interval for proportion differences, as well as the $\frac{+2}{+4}$ confidence interval for each singular proportion (Figure \@ref(fig:95CI)).
-```{r, 95CI, warning=FALSE, echo=FALSE}
+```{r, 95CI, warning=FALSE, echo=FALSE, fig.cap="Proportion of Lightning-caused Wildfires (AC 95% CI)"}
 # Visualization
 
 ci_2006 <- prop.test(x_2006+2, n_2006+4, correct=F)$conf
 ci_2024 <- prop.test(x_2024+2, n_2024+4, correct=F)$conf
 
 plot_df <- tibble(
-  YEAR  = factor(c(2006, 2024, "2024 - 2006")),
+  YEAR  = factor(c(2006, 2024, "Diff: 2024 - 2006")),
   prop  = c(p_lightning_2006, p_lightning_2024, p_lightning_2024-p_lightning_2006),
   lower = c(ci_2006[[1]], ci_2006[[2]], lb),
   upper = c(ci_2024[[1]], ci_2024[[2]], ub),
@@ -286,7 +316,7 @@ ggplot(plot_df, aes(x = YEAR, y = prop, fill = YEAR)) +
 ```
 
 ## Question 2
-```{r, cache=TRUE}
+```{r}
 # Create a clean dataset with only complete cases
 wildfire_clean = df %>%  filter(!is.na(WIND_SPEED) & !is.na(FIRE_SPREAD_RATE))
 # Use the clean dataset
@@ -294,7 +324,7 @@ lm_model = lm(FIRE_SPREAD_RATE ~ WIND_SPEED, data = wildfire_clean)
 summary(lm_model)
 ```
 
-```{r, echo=FALSE, cache=TRUE}
+```{r, echo=FALSE}
 # This is used to check the detailed statistics about my model such as the 
 # Coefficients which is the relationship between wind speed and fire spread rate 
 # R-squared: how well wind speed explains fire spread(0 = no relationship, 1 = perfect relationship)
@@ -309,27 +339,10 @@ ggplot(wildfire_clean, aes(x = WIND_SPEED, y = FIRE_SPREAD_RATE)) +
        y = "Fire Spread Rate")
 # Residual is the difference between what your model predicted and what actually happened.
 # Fitted values is what my model predicted for fire spread rate
-
-# Residual plot (ggplot2)
-resid_df = data.frame(fitted = lm_model$fitted.values,
-                       resid = lm_model$residuals)
-
-ggplot(resid_df, aes(x = fitted, y = resid)) +
-  geom_point(alpha = 0.6) +
-  geom_hline(yintercept = 0, col = "red", linetype = "dashed") +
-  labs(title = "Residual Plot",
-       x = "Fitted Values (Predicted Fire Spread Rate)",
-       y = "Residuals")
-
-# Sample size information
-cat("Total observations in dataset:", nrow(df), "\n")
-cat("Complete cases used in analysis:", nrow(wildfire_clean), "\n")
-cat("Observations removed due to missing data:", 
-    nrow(df) - nrow(wildfire_clean), "\n")
 ```
 
 
-```{r, echo=FALSE, cache=TRUE}
+```{r, echo=FALSE}
 # Residual plot (ggplot2)
 resid_df = data.frame(fitted = lm_model$fitted.values,
                        resid = lm_model$residuals)
@@ -346,31 +359,28 @@ cat("Total observations in dataset:", nrow(df), "\n")
 cat("Complete cases used in analysis:", nrow(wildfire_clean), "\n")
 cat("Observations removed due to missing data:", 
     nrow(df) - nrow(wildfire_clean), "\n")
-
 ```
 
 
 
 # Conclusion And Future Work
-6.1 Interpretation of Results
-[Discuss what the results imply in the context of the research questions and domain.]
-6.2 Limitations
-[Highlight any limitations of the data or methodology that may impact conclusions.]
-6.3 Recommendations and Future Directions
-[Suggest potential extensions of the study, alternative methods, or further investigations that could build on your
-findings.]
 
-\indent **Question 1:** The proportion of lightning-caused wildfires in 2024 is significantly greater than the proportion from 2006. This means that in fact, we are seeing quantifiable evidence that climate change is having a significant impact on the wildfire landscape in Canada. Either there is a greater frequency in lightning strikes due to changing weather conditions, or drought conditions and extreme heat is causing the forests to be drier and more flammable, or both. Our data however, does not make it possible to distinguish between which of these possibilities is the dominant factor. Future steps could be to include weather data to compare with the wildfire cause proportions. For example we could obtain lightning strike data and see if the frequency of lightning strikes is indeed increasing. If the frequency of strikes is not increasing, then we could likely attribute the increase in lightning-caused fires to drier conditions, and vise-versa. It would also be interesting to use this weather data and create a linear regression between proportion of lightning-caused fires as a function of frequency of lightning strikes for each year from 2006 to 2024, as this would also help to distinguish between the driving cause of lightning-caused fires (lightning itself, or highly flammable conditions).
+**Question 1:** The proportion of lightning-caused wildfires in 2024 is significantly greater than the proportion from 2006. This means that in fact, we are seeing quantifiable evidence that climate change is having a significant impact on the wildfire landscape in Canada. 
+Our main assumption is that climate change has increased lightning frequency, which in turn may have led to more lightning-caused fires.However, we didn’t include any direct climate or weather variables in our analysis. Future steps could be to include weather data to compare with the wildfire cause proportions. For example we could obtain lightning strike data and see if the frequency of lightning strikes is indeed increasing. If the frequency of strikes is not increasing, then we could likely attribute the increase in lightning-caused fires to drier conditions, and vise-versa. It would also be interesting to use this weather data and create a linear regression between proportion of lightning-caused fires as a function of frequency of lightning strikes for each year from 2006 to 2024, as this would also help to distinguish between the driving cause of lightning-caused fires (lightning itself, or highly flammable conditions).
 
-\indent Some limitations of this study could include that these wildfires are only those which occur in the FPA (forest protection area). Thus, it is possible that lightning-caused and non-lightning caused fires are occurring outside of these regions in Alberta, limiting the comprehensiveness of our scope of wildfire causes. However, this is the nature and drawback of sampling.
+Another limitation could be that our dataset covers a long period from 2006 to 2024. Although our hypothesis assumes that lightning-caused wildfires have significantly increased by 2024, this large gap may introduce bias. It’s possible that 2006 and 2024 were just exceptional years, and if we included all years in between, the trend might not show a consistent increase. Thus comparing proportions for multiple years could prove more informative. Additionally, in the General_Cause column, we specifically focused on “Lightning.”
+However, in 2006 and 2024 there were 48 and 89 fires respectively marked as "Undetermined" or "Under Investigation". It’s possible that some of these fires were actually caused by lightning, which means our current estimates might slightly underestimate the true number of lightning-caused fires 
 
-\indent Ultimately, climate change can and will affect many domains of our lives. There is already quantifiable evidence that it is increasing the frequency of natural disasters like wildfires. This makes it up to people to decide if we want to heed the warnings of these growing trends and try to mitigate the impacts before they take an even greater toll on human lives and the environment.
+Mena and Agum insert your limitations here.
 
 
-# References
+Ultimately, climate change can and will affect many domains of our lives. There is already quantifiable evidence that it is increasing the frequency of natural disasters like wildfires. This makes it up to people to decide if we want to heed the warnings of these growing trends and try to mitigate the impacts before they take an even greater toll on human lives and the environment.
 
+# References {-}
+<div id="refs"></div>
 
-#Appendix
+# (APPENDIX) Appendix {-}
+# Appendix A
 
 Here is some additional code that was not shown in the report
 ```{r, warning=FALSE, echo=TRUE, results='hide', fig.show='hide'}
