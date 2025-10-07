@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.9.11)  5 OCT 2025 20:44
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.9.11)  6 OCT 2025 20:49
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -486,15 +486,15 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <5> on input line 191.
 
-Underfull \hbox (badness 1152) in paragraph at lines 197--198
-\T1/lmr/m/n/10 able ``WIND_SPEED'' (in km/h) and our de-pen-dant (y) vari-able will be the nu-mer-i-cal vari-able
+Underfull \hbox (badness 1189) in paragraph at lines 197--198
+\T1/lmr/m/n/10 able ``WIND_SPEED'' (in km/h) and our de-pen-dent (y) vari-able will be the nu-mer-i-cal vari-able
  []
 
 
 
 [2{c:/Users/johan/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}]
-Overfull \hbox (11.91936pt too wide) in paragraph at lines 213--215
-[]\T1/lmr/bx/n/10 [Describe the na-ture of the data (e.g., cat-e-gor-i-cal, con-tin-u-ous, time-series, text/unstructured)
+Overfull \hbox (42.51482pt too wide) in paragraph at lines 215--216
+[]\T1/lmr/bx/n/10 Question 2: \T1/lmr/m/n/10 Our sec-ond area of in-ves-ti-ga-tion uses the con-tin-u-ous nu-mer-i-cal vari-ables: ``FIRE_SPREAD_RATE''
  []
 
 
@@ -502,107 +502,125 @@ Overfull \hbox (11.91936pt too wide) in paragraph at lines 213--215
 [3{c:/Users/johan/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{c:/Users/johan/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}]
 
 [4{c:/Users/johan/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}]
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 291.
+(c:/Users/johan/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
+File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+<602_Report_files/figure-latex/count_prop-1.pdf, id=50, 433.62pt x 289.08pt>
+File: 602_Report_files/figure-latex/count_prop-1.pdf Graphic file (type pdf)
+<use 602_Report_files/figure-latex/count_prop-1.pdf>
+Package pdftex.def Info: 602_Report_files/figure-latex/count_prop-1.pdf  used on input line 319.
+(pdftex.def)             Requested size: 433.61894pt x 289.07928pt.
 <602_Report_files/figure-latex/piechart-1.pdf, id=52, 433.62pt x 433.62pt>
 File: 602_Report_files/figure-latex/piechart-1.pdf Graphic file (type pdf)
 <use 602_Report_files/figure-latex/piechart-1.pdf>
-Package pdftex.def Info: 602_Report_files/figure-latex/piechart-1.pdf  used on input line 306.
+Package pdftex.def Info: 602_Report_files/figure-latex/piechart-1.pdf  used on input line 327.
 (pdftex.def)             Requested size: 433.61894pt x 433.61894pt.
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 316.
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 336.
 (c:/Users/johan/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 317.
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 337.
 
 LaTeX Font Warning: Font shape `T1/lmtt/bx/it' in size <10> not available
-(Font)              Font shape `T1/lmtt/b/sl' tried instead on input line 317.
+(Font)              Font shape `T1/lmtt/b/sl' tried instead on input line 337.
 
-
-LaTeX Warning: Reference `fig:normcurve' on page 5 undefined on input line 326.
-
-
-LaTeX Warning: Reference `fig:normcurve' on page 5 undefined on input line 326.
-
-<602_Report_files/figure-latex/normcurve-1.pdf, id=53, 433.62pt x 289.08pt>
+<602_Report_files/figure-latex/normcurve-1.pdf, id=55, 433.62pt x 289.08pt>
 File: 602_Report_files/figure-latex/normcurve-1.pdf Graphic file (type pdf)
 <use 602_Report_files/figure-latex/normcurve-1.pdf>
-Package pdftex.def Info: 602_Report_files/figure-latex/normcurve-1.pdf  used on input line 328.
+Package pdftex.def Info: 602_Report_files/figure-latex/normcurve-1.pdf  used on input line 351.
 (pdftex.def)             Requested size: 433.61894pt x 289.07928pt.
 
 
-[5]
-
-[6 <./602_Report_files/figure-latex/piechart-1.pdf>]
-
-LaTeX Warning: Reference `fig:95CI' on page 7 undefined on input line 351.
-
-<602_Report_files/figure-latex/95CI-1.pdf, id=73, 469.755pt x 325.215pt>
+[5{c:/Users/johan/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}]
+<602_Report_files/figure-latex/95CI-1.pdf, id=69, 433.62pt x 289.08pt>
 File: 602_Report_files/figure-latex/95CI-1.pdf Graphic file (type pdf)
 <use 602_Report_files/figure-latex/95CI-1.pdf>
-Package pdftex.def Info: 602_Report_files/figure-latex/95CI-1.pdf  used on input line 352.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+Package pdftex.def Info: 602_Report_files/figure-latex/95CI-1.pdf  used on input line 378.
+(pdftex.def)             Requested size: 433.61894pt x 289.07928pt.
 
-Underfull \hbox (badness 1484) in paragraph at lines 350--353
-[]\T1/lmr/m/n/10 Our 95% con-fi-dence in-ter-val for $\OML/lmm/m/it/10 p[] \OMS/lmsy/m/n/10 ^^@ \OML/lmm/m/it/10 p[]$ \T1/lmr/m/n/10 lies be-tween 0.0353 to 0.1057.
+LaTeX Warning: Reference `(' on page 6 undefined on input line 384.
+
+
+
+[6 <./602_Report_files/figure-latex/count_prop-1.pdf>]
+
+[7 <./602_Report_files/figure-latex/piechart-1.pdf>]
+
+[8 <./602_Report_files/figure-latex/normcurve-1.pdf> <./602_Report_files/figure-latex/95CI-1.pdf>]
+<602_Report_files/figure-latex/dist_fsr-1.pdf, id=111, 433.62pt x 289.08pt>
+File: 602_Report_files/figure-latex/dist_fsr-1.pdf Graphic file (type pdf)
+<use 602_Report_files/figure-latex/dist_fsr-1.pdf>
+Package pdftex.def Info: 602_Report_files/figure-latex/dist_fsr-1.pdf  used on input line 388.
+(pdftex.def)             Requested size: 433.61894pt x 289.07928pt.
+<602_Report_files/figure-latex/dist_ws-1.pdf, id=112, 433.62pt x 289.08pt>
+File: 602_Report_files/figure-latex/dist_ws-1.pdf Graphic file (type pdf)
+<use 602_Report_files/figure-latex/dist_ws-1.pdf>
+Package pdftex.def Info: 602_Report_files/figure-latex/dist_ws-1.pdf  used on input line 394.
+(pdftex.def)             Requested size: 433.61894pt x 289.07928pt.
+<602_Report_files/figure-latex/lin_reg-1.pdf, id=113, 433.62pt x 289.08pt>
+File: 602_Report_files/figure-latex/lin_reg-1.pdf Graphic file (type pdf)
+<use 602_Report_files/figure-latex/lin_reg-1.pdf>
+Package pdftex.def Info: 602_Report_files/figure-latex/lin_reg-1.pdf  used on input line 402.
+(pdftex.def)             Requested size: 433.61894pt x 289.07928pt.
+
+
+[9 <./602_Report_files/figure-latex/dist_fsr-1.pdf>]
+
+[10 <./602_Report_files/figure-latex/dist_ws-1.pdf> <./602_Report_files/figure-latex/lin_reg-1.pdf>]
+<602_Report_files/figure-latex/residual_plot-1.pdf, id=146, 433.62pt x 289.08pt>
+File: 602_Report_files/figure-latex/residual_plot-1.pdf Graphic file (type pdf)
+<use 602_Report_files/figure-latex/residual_plot-1.pdf>
+Package pdftex.def Info: 602_Report_files/figure-latex/residual_plot-1.pdf  used on input line 486.
+(pdftex.def)             Requested size: 433.61894pt x 289.07928pt.
+<602_Report_files/figure-latex/norm_prob-1.pdf, id=147, 433.62pt x 289.08pt>
+File: 602_Report_files/figure-latex/norm_prob-1.pdf Graphic file (type pdf)
+<use 602_Report_files/figure-latex/norm_prob-1.pdf>
+Package pdftex.def Info: 602_Report_files/figure-latex/norm_prob-1.pdf  used on input line 494.
+(pdftex.def)             Requested size: 433.61894pt x 289.07928pt.
+<602_Report_files/figure-latex/homosced-1.pdf, id=148, 433.62pt x 289.08pt>
+File: 602_Report_files/figure-latex/homosced-1.pdf Graphic file (type pdf)
+<use 602_Report_files/figure-latex/homosced-1.pdf>
+Package pdftex.def Info: 602_Report_files/figure-latex/homosced-1.pdf  used on input line 502.
+(pdftex.def)             Requested size: 433.61894pt x 289.07928pt.
+
+
+[11]
+
+[12 <./602_Report_files/figure-latex/residual_plot-1.pdf> <./602_Report_files/figure-latex/norm_prob-1.pdf>]
+
+[13 <./602_Report_files/figure-latex/homosced-1.pdf>]
+
+[14]
+Underfull \hbox (badness 10000) in paragraph at lines 583--584
+\T1/lmr/m/n/10 / / www . publicsafety . gc . ca / cnt / trnsprnc / brfng -[] mtrls / prlmntry -[] bndrs / 20250130 / 11 -[] en . aspx$[]. []$https :
  []
 
 
-Underfull \hbox (badness 1888) in paragraph at lines 350--353
-\T1/lmr/m/n/10 Both lower and up-per bounds of our con-fi-dence in-ter-val are greater than 0, so this sup-ports
- []
-
-
-Underfull \hbox (badness 1436) in paragraph at lines 350--353
-\T1/lmr/m/n/10 the above con-clu-sion that the pro-por-tion of light-ning caused wild-fires from 2024 is sig-nif-i-cantly
- []
-
-
-Underfull \hbox (badness 1371) in paragraph at lines 350--353
-\T1/lmr/m/n/10 tion dif-fer-ences, as well as the $[]$ con-fi-dence in-ter-val for each sin-gu-lar pro-por-tion (Fig-ure []).
+Overfull \vbox (2.2217pt too high) detected at line 619
  []
 
 
 
-[7 <./602_Report_files/figure-latex/normcurve-1.pdf>]
+[15]
 
-[8 <./602_Report_files/figure-latex/95CI-1.pdf>]
-<602_Report_files/figure-latex/unnamed-chunk-7-1.pdf, id=97, 469.755pt x 325.215pt>
-File: 602_Report_files/figure-latex/unnamed-chunk-7-1.pdf Graphic file (type pdf)
-<use 602_Report_files/figure-latex/unnamed-chunk-7-1.pdf>
-Package pdftex.def Info: 602_Report_files/figure-latex/unnamed-chunk-7-1.pdf  used on input line 391.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-<602_Report_files/figure-latex/unnamed-chunk-7-2.pdf, id=98, 469.755pt x 325.215pt>
-File: 602_Report_files/figure-latex/unnamed-chunk-7-2.pdf Graphic file (type pdf)
-<use 602_Report_files/figure-latex/unnamed-chunk-7-2.pdf>
-Package pdftex.def Info: 602_Report_files/figure-latex/unnamed-chunk-7-2.pdf  used on input line 391.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+[16]
 
-Overfull \hbox (19.99396pt too wide) in paragraph at lines 391--392
-[][]
- []
+[17]
+
+[18]
+LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 862.
+(c:/Users/johan/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmtt.fd
+File: ts1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+
+LaTeX Font Warning: Font shape `TS1/lmtt/bx/it' in size <10> not available
+(Font)              Font shape `TS1/lmtt/b/sl' tried instead on input line 862.
 
 
 
-[9 <./602_Report_files/figure-latex/unnamed-chunk-7-1.pdf>]
-<602_Report_files/figure-latex/unnamed-chunk-8-1.pdf, id=113, 469.755pt x 325.215pt>
-File: 602_Report_files/figure-latex/unnamed-chunk-8-1.pdf Graphic file (type pdf)
-<use 602_Report_files/figure-latex/unnamed-chunk-8-1.pdf>
-Package pdftex.def Info: 602_Report_files/figure-latex/unnamed-chunk-8-1.pdf  used on input line 405.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-
-Overfull \hbox (19.99396pt too wide) in paragraph at lines 405--406
-[][] 
- []
-
-
-
-[10 <./602_Report_files/figure-latex/unnamed-chunk-7-2.pdf>]
-
-[11 <./602_Report_files/figure-latex/unnamed-chunk-8-1.pdf>]
-
-[12]
-
-[13] (./602_Report.aux)
+[19] (./602_Report.aux)
  ***********
 LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-08-13>
@@ -612,18 +630,18 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 12087 strings out of 469780
- 188631 string characters out of 5480019
- 606838 words of memory out of 5000000
- 40231 multiletter control sequences out of 15000+600000
- 684385 words of font info for 86 fonts, out of 8000000 for 9000
+ 12220 strings out of 469780
+ 192025 string characters out of 5480019
+ 611266 words of memory out of 5000000
+ 40334 multiletter control sequences out of 15000+600000
+ 685057 words of font info for 88 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 89i,7n,93p,1162b,627s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 89i,11n,93p,1263b,631s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/Users/johan/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx10.pfb><c:/Users/johan/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/johan/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmex10.pfb><c:/Users/johan/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi10.pfb><c:/Users/johan/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi7.pfb><c:/Users/johan/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/johan/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/johan/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb><c:/Users/johan/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr5.pfb><c:/Users/johan/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb><c:/Users/johan/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/Users/johan/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/Users/johan/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy7.pfb><c:/Users/johan/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtk10.pfb><c:/Users/johan/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtko10.pfb><c:/Users/johan/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb><c:/Users/johan/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtti10.pfb>
-Output written on 602_Report.pdf (13 pages, 1583653 bytes).
+Output written on 602_Report.pdf (19 pages, 3038304 bytes).
 PDF statistics:
- 338 PDF objects out of 1000 (max. 8388607)
- 273 compressed objects within 3 object streams
- 51 named destinations out of 1000 (max. 500000)
- 199 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 431 PDF objects out of 1000 (max. 8388607)
+ 349 compressed objects within 4 object streams
+ 72 named destinations out of 1000 (max. 500000)
+ 227 words of extra memory for PDF output out of 10000 (max. 10000000)
 
