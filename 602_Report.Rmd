@@ -7,9 +7,11 @@ author: |
   Agambir Bandesha – 30302510  
   Ran Bi – 30301306
 date: "Date: `r Sys.Date()`"
+site: bookdown::bookdown_site
 output:
   bookdown::pdf_document2:
     toc: false
+    extra_dependencies: ["float"]
 header-includes:
   - \usepackage{indentfirst}
   - \setlength{\parindent}{2em}
@@ -85,16 +87,18 @@ Data was collected from 2006-01-01 to 2024-12-31. The resource was created on 20
 
 # 3. Topic(s) to Investigate
 
-**Question 1**: 
-Research has shown that climate change is increasing the frequency of lightning strikes globally including in western North America [@perez2023]. This along with drier conditions increases the risk of potential large wildfires caused by lightning.
-In particular, the 2024 Jasper wildfire is a strong example of a disastrous fire which was lightning caused. The Jasper wildfire resulted in mass evacuations, the destruction of houses and infrastructure, and serious environmental and economic damages in Alberta’s mountain parks. It is an example of how lightning caused wildfires are not only becoming more frequent but also becoming intense due to the climate change [@PublicSafety2025].
+**Question 1**: Research has shown that climate change is increasing the frequency of lightning strikes globally including in western North America [@perez2023]. This along with drier conditions increases the risk of potential large wildfires caused by lightning. In particular, the 2024 Jasper wildfire is a strong example of a disastrous fire which was lightning caused. The Jasper wildfire resulted in mass evacuations, the destruction of houses and infrastructure, and serious environmental and economic damages in Alberta’s mountain parks. It is an example of how lightning caused wildfires are not only becoming more frequent but also becoming intense due to the climate change [@PublicSafety2025].
 
-We want to see if the proportion of lightning caused wildfires from 2024 is significantly greater than the proportion of lightning caused wildfires from 2006. We hypothesize that 2024 will have a significantly higher proportion than wildfires from 2006 due to a higher frequency of lightning strikes and drier forest conditions beneficial for fire ignition upon a lightning strike. We will assess if $p_{lightning, 2024} > p_{lightning, 2006}$ as outlined by our hypotheses below. $$
+We want to see if the proportion of lightning caused wildfires from 2024 is significantly greater than the proportion of lightning caused wildfires from 2006. We hypothesize that 2024 will have a significantly higher proportion than wildfires from 2006 due to a higher frequency of lightning strikes and drier forest conditions beneficial for fire ignition upon a lightning strike. We will assess if $p_{lightning, 2024} > p_{lightning, 2006}$ as outlined by our hypotheses below.
+
+
+$$
 \begin{aligned}
 H_{0} &:    p_{lightning, 2024} \leq p_{lightning, 2006} \\
 H_{A} &:    p_{lightning, 2024}  > p_{lightning, 2006}
 \end{aligned}
 $$
+
 
 **Question 2**: Wildfires are a recurring natural hazard in Alberta, Canada, where vast boreal forests, grasslands, and mixed-fuel landscapes are exposed to seasonal fire risk. In Alberta, major fire events such as the 2016 Fort McMurray wildfire highlighted how fast-spreading fires can destroy thousands of structures, displace tens of thousands of people, and cost billions in recovery [@adu2022]. Anticipating spread rate is therefore a central concern in wildfire management, where even small gains in prediction can inform life-saving interventions.
 
@@ -104,6 +108,7 @@ Research shows that wildfire spread is influenced by a combination of fuels, wea
 
 In this project, we therefore hypothesize that wind speed will be a largely contributing factor to fire spread rate in Alberta. To test this, we will fit a simple linear regression model of the form: FIRE_SPREAD_RATE \~ WIND_SPEED
 
+
 $$
 \begin{aligned}
 H_{0}&: \text{There is no correlation between wind speed and fire spread rate.} \\
@@ -111,11 +116,13 @@ H_{A}&: \text{The alternative hypothesis is a correlation between wind speed and
 \end{aligned}
 $$
 
+
 # 4. Statistical Methods
 
 ## Planned Methods:
 
-**Question 1** : We will use a classical right sided Z test for proportions to determine if $p_{lightning, 2024} > p_{lightning, 2006}$ as determined by the formula: 
+**Question 1** : We will use a classical right sided Z test for proportions to determine if $p_{lightning, 2024} > p_{lightning, 2006}$ as determined by the formula:
+
 
 $$
 \begin{aligned}
@@ -126,7 +133,9 @@ Z_{obs} &= \frac{(\widehat{p}_{1}-\widehat{p}_{2})-(p_{1}-p_{2})}
 \end{aligned}
 $$
 
+
 We will reject the null hypothesis if $p < 0.05$. We have confirmed that the conditions to use this method are met. Our variables $p_{lightning, 2024} > p_{lightning, 2006}$ are from independent samples. Our n values are sufficiently large with $n_{2024} = 1230 \text{ and } n_{2006} = 1954$ to use parametric tests relying on the central limit theorem. To confirm our methods, we will also use the conventional $\frac{+1}{+2}$ Agresti-coull confidence interval for the difference between proportions.
+
 
 $$
 \begin{aligned}
@@ -139,27 +148,30 @@ $$
 
 We will compute this confidence interval for $p_{lightning, 2024} - p_{lightning, 2006}$ and if both bounds of the confidence interval are above 0, this will confirm that we should reject the null hypothesis and conclude that $p_{lightning, 2024}  > p_{lightning, 2006}$. If the bounds encompass 0, we will conclude that there is no significant difference between $p_{lightning, 2024}  \text{ and } p_{lightning, 2006}$.
 
-**Question 2** : Our aim is to estimate the strength and nature of the relationship between wind speed and fire spread rate using a simple linear regression. 
+**Question 2** : Our aim is to estimate the strength and nature of the relationship between wind speed and fire spread rate using a simple linear regression.
+
+
 $$
 Y_{i} = \beta_{0} + \beta_{1}x_{i} + \epsilon_{i}
 $$
 
 where:
 
--   $i =$ fire spread rate for the $i_{th}$ observation.
--   $x_{i} =$ wind speed for the $i_{th}$ observation.
+-   $i=$ fire spread rate for the $i_{th}$ observation.
+-   $x_{i}=$ wind speed for the $i_{th}$ observation.
 -   $\beta_{0}$ = intercept (the estimated fire spread rate when wind speed is 0).
 -   $\beta_{1}$ = slope (the expected change in fire spread rate for a one-unit increase in wind speed).
 -   $\epsilon_{i}$ = random error term accounting for variation not explained by wind speed.
 
 We will estimate $\beta_{0}$ and $\beta_{1}$ using least squares regression, which minimizes the sum of squared differences between observed fire spread rates and predicted values.
 
-\[
+
+$$
 \begin{aligned}
 \text{The null hypothesis is}\quad H_{0}&:  \beta_{1} = 0 \\
 \text{The alternative hypothesis is}\quad H_{A}&: \beta_{1} \ne 0
 \end{aligned}
-\]
+$$
 
 We will then assess the strength of the relationship using: the estimated slope $\beta_{1}$ and the correlation coefficient, which measures the strength of the linear relationship. In the end, we will also utilize a residual plot to assess our regression.
 
@@ -179,9 +191,9 @@ df = read_csv(url, show_col_types = F)
 
 # 5. Results
 
-**Question 1:** We will investigate our initial question to see if the proportion of lightning-caused forest fires is significantly greater in 2024 than it is in 2006. Below is a plot showing the change in proportion of lightning-caused wildfires over time (Figure \@ref(fig:count_prop)).
+**Question 1:** We will investigate our initial question to see if the proportion of lightning-caused forest fires is significantly greater in 2024 than it is in 2006. Below is a plot showing the change in proportion of lightning-caused wildfires over time (Figure 1).
 
-```{r, count_prop, echo=FALSE, fig.width=6, fig.height=4, fig.cap="Lightning-Caused Wildfires: Count vs Proportion (2006–2024)"}
+```{r, count_prop, echo=FALSE, fig.width=6, fig.height=4, fig.cap="Lightning-Caused Wildfires - Count vs Proportion (2006–2024)"}
 light_prop = df %>%
   group_by(YEAR) %>%
   summarise(
@@ -214,6 +226,7 @@ ggplot(light_prop, aes(x = YEAR)) +
   )
 
 ```
+
 
 ```{r, echo=FALSE}
 ####### determining proportion for lightning caused fires in 2006 and 2024  #######
@@ -281,9 +294,9 @@ pvalue <- round(1 - pnorm(Zobs),5)
 #print(paste("The test statistic is:", round(Zobs,4), "The p-value is:", pvalue))
 ```
 
-We then transformed the difference in proportions to get the corresponding Z statistic for a standard normal curve. The calculated Z test statistic for our right sided hypothesis test is `r Zobs` (Figure \@ref(fig:normcurve). This gives us a p-value of `r pvalue` which is less than our alpha of 0.05 (Figure \@ref(fig:normcurve)). Thus, we can reject the null hypothesis and conclude that the proportion of lightning caused wildfires in 2024 is significantly greater than the proportion from 2006.
+We then transformed the difference in proportions to get the corresponding Z statistic for a standard normal curve. The calculated Z test statistic for our right sided hypothesis test is `r Zobs` (Figure \@ref(fig:normcurve)). This gives us a p-value of `r pvalue` which is less than our alpha of 0.05 (Figure \@ref(fig:normcurve)). Thus, we can reject the null hypothesis and conclude that the proportion of lightning caused wildfires in 2024 is significantly greater than the proportion from 2006.
 
-```{r, normcurve, warning=FALSE, echo=FALSE, fig.width=6, fig.height=4, fig.cap=bquote("Right-Tailed Test for Lightning-Caused Wildfire Proportions")}
+```{r, normcurve, warning=FALSE, echo=FALSE, fig.width=6, fig.height=4, fig.cap="Right-Tailed Test for Lightning-Caused Wildfire Proportions"}
 #set up dataframe
 #bquote("Right-Tailed Test for Lightning-Caused Wildfire Proportions " ~ H[A] * ": " ~ p[2024] > p[2006])
 x <- seq(-5, 5,0.001)
@@ -304,7 +317,7 @@ p <- df_norm %>%
     #shade in areas
    geom_area(data = subset(df_norm, x > qnorm(0.95)), aes(x = x, y = y), fill = "red", alpha = 0.3) +   # shade passed critical value
    geom_area(data = subset(df_norm, x > Zobs), aes(x = x, y = y), fill = "blue", alpha = 1) +     #shade passed Zobs
-   annotate(geom = "text", x = 5, y = 0.02, label = paste("p=", pvalue), size = 3, hjust = 1) +
+   annotate(geom = "text", x = 5, y = 0.02, label = paste("p=", pvalue), size = 2.5, hjust = 1) +
   ggtitle(
           #bquote("Right-Tailed Test for Lightning-Caused Wildfire Proportions H"[A] * ": p"[2024] > "p"[2006]),
           #subtitle = 
@@ -334,6 +347,7 @@ lb <- ptilde_diff - z * SE
 ub <- ptilde_diff + z * SE
 ```
 
+<br><br>
 Our 95% confidence interval for $p_{2024,lightning}-p_{2006,lightning}$ lies between `r paste(round(lb, 4), "to", round(ub, 4))`. Both lower and upper bounds of our confidence interval are greater than 0, so this supports the above conclusion that the proportion of lightning caused wildfires from 2024 is significantly greater than that of 2006. Below is a visualization for the 95% confidence interval for proportion differences, as well as the $\frac{+2}{+4}$ confidence interval for each singular proportion (Figure \@ref(fig:95CI)).
 
 ```{r, 95CI, warning=FALSE, fig.width=6, fig.height=4, echo=FALSE, fig.cap="Proportion of Lightning-caused Wildfires (AC 95% CI)"}
@@ -367,9 +381,10 @@ ggplot(plot_df, aes(x = YEAR, y = prop, fill = YEAR)) +
 ```
 
 ## Question 2
-Below, the distributions of the two variables used in the linear regression, fire spread rate and wind speed, are shown (Figure \@ref(fig:dist_fsr) ; \ref(fig:dist_ws)) The majority of observations tend to be near 0 for fire spread rate and between 0 to 25 for wind speed, with fewer observations at higher values.
 
-```{r, dist_fsr, warning=F, echo=F, fig.width=6, fig.height=4, fig.cap="Distribution of Fire Spread Rate"}
+Below, the distributions of the two variables used in the linear regression, fire spread rate and wind speed, are shown (Figure 5,6) The majority of observations tend to be near 0 for fire spread rate and between 0 to 25 for wind speed, with fewer observations at higher values.
+
+```{r, dist_fsr, warning=F, echo=F,  fig.pos = "H", fig.width=6, fig.height=4, fig.cap="Distribution of Fire Spread Rate"}
 
 p = tibble(x = df$FIRE_SPREAD_RATE) %>% 
   ggplot(aes(x = x)) +
@@ -381,7 +396,9 @@ p = tibble(x = df$FIRE_SPREAD_RATE) %>%
 print(p)
 ```
 
-```{r, dist_ws, warning=F, echo=F, fig.width=6, fig.height=4, fig.cap="Distribution of Wind Speed"}
+\newpage
+
+```{r, dist_ws, warning=F, echo=F, fig.width=6, fig.height=4,  fig.pos = "H", fig.cap="Distribution of Wind Speed"}
 
 p = tibble(x = df$WIND_SPEED) %>% 
   ggplot(aes(x = x)) +
@@ -394,8 +411,7 @@ print(p)
 
 ```
 
-The scatter plot of wind speed vs. fire spread rate shows a weak positive correlation. This is indicated by the correlation coefficient value of 0.1372, which is both positive and near 0 (Figure \@ref(fig:lin_reg); \@ref(summary_mod); \@ref(cor_co)).
-
+The scatter plot of wind speed vs. fire spread rate shows a weak positive correlation (Figure 7). This is indicated by the correlation coefficient value of 0.1372, which is both positive and near 0 
 
 ```{r, echo = FALSE}
 # Create a clean dataset with only complete cases
@@ -444,7 +460,7 @@ ub_b1 = CI[2,2] %>% round(4)
 print(CI)
 ```
 
-Therefore, there is a 95% probability that $\beta_{1}$ is between `r paste(lb_b1, "and", ub_b1)` \@ref(CI_b1). Thus, we can reject the null hypothesis and confirm that $\beta_{1}$ is significantly different from 0. This, along with the p-value confirms that wind is a weak but significant contributor to fire spread rate.
+Therefore, there is a 95% probability that $\beta_{1}$ is between `r paste(lb_b1, "and", ub_b1)`. Thus, we can reject the null hypothesis and confirm that $\beta_{1}$ is significantly different from 0. This, along with the p-value confirms that wind is a weak but significant contributor to fire spread rate.
 
 ```{r, echo=F}
 cat("Total observations in dataset:", nrow(df), "\n")
@@ -455,7 +471,7 @@ cat("Observations removed due to missing data:",
 
 As shown above, this analysis consisted of 23 657 observations, with 2 894 observations removed due to incomplete data entries.
 
-```{r, residual_plot, echo=F, fig.width=6, fig.height=4, fig.cap="Residual Plot"}
+```{r, residual_plot, echo=F, fig.width=6, fig.height=4,  fig.pos = "H", fig.cap="Residual Plot"}
 # Residual plot (ggplot2)
 resid_df = data.frame(fitted = lm_model$fitted.values,
                        resid = lm_model$residuals)
@@ -471,7 +487,7 @@ ggplot(resid_df, aes(x = fitted, y = resid)) +
 
 Above, the residuals are plotted against the fitted values for fire spread rate. Below are tests for the 2 assumptions of a simple linear regression: normality of the residuals and homoscedasticity.
 
-```{r, norm_prob, echo=F, fig.width=6, fig.height=4, fig.cap="Normal Probability Plot of Standardized Residuals"}
+```{r, norm_prob, echo=F, fig.width=6, fig.height=4, fig.pos = "H", fig.cap="Normal Probability Plot of Standardized Residuals"}
 s <- summary(lm_model)
 SE = s$sigma
 residual = s$residuals
@@ -487,9 +503,9 @@ normprob <- stand.res %>%
 print(normprob)
 ```
 
-The residuals appear to substantially deviate from the normal reference line at the high ends of the distribution. This implies large outliers in our FIRE_SPREAD_RATE variable. This also breaks the first assumption of normality of the y-values(Figure \@ref(fig:norm_prob).
+The residuals appear to substantially deviate from the normal reference line at the high ends of the distribution. This implies large outliers in our FIRE_SPREAD_RATE variable. This also breaks the first assumption of normality of the y-values(Figure 9).
 
-```{r, homosced, echo=FALSE, fig.width=6, fig.height=4, fig.cap="Homoscedasticity Check (Residuals vs Wind Speed)"}
+```{r, homosced, echo=FALSE, fig.width=6, fig.height=4, fig.pos = "H", fig.cap="Homoscedasticity Check (Residuals vs Wind Speed)"}
 #test for homoscedadicity
 diagnostic.df <- data.frame(
   WIND_SPEED = wildfire_clean$WIND_SPEED,
@@ -511,6 +527,7 @@ print(homosced)
 
 Above, the plot for checking homoscedasticity suggests that the variance at low range of wind speed is greater than the variance at the range of wind speed. Thus, there is not a uniform spread of residuals, so our data also violates the homoscedasticity assumption (Figure \@ref(fig:homosced)).
 
+\newpage
 # Conclusion And Future Work
 
 **Question 1:** The proportion of lightning-caused wildfires in 2024 is significantly greater than the proportion from 2006. This means that in fact, we are seeing quantifiable evidence that climate change is having a significant impact on the wildfire landscape in Canada. Our main assumption is that climate change has increased lightning frequency, which in turn may have led to more lightning-caused fires.However, we didn’t include any direct climate or weather variables in our analysis. Future steps could be to include weather data to compare with the wildfire cause proportions. For example we could obtain lightning strike data and see if the frequency of lightning strikes is indeed increasing. If the frequency of strikes is not increasing, then we could likely attribute the increase in lightning-caused fires to drier conditions, and vise-versa. It would also be interesting to use this weather data and create a linear regression between proportion of lightning-caused fires as a function of frequency of lightning strikes for each year from 2006 to 2024, as this would also help to distinguish between the driving cause of lightning-caused fires (lightning itself, or highly flammable conditions).
@@ -521,15 +538,19 @@ Another limitation could be that our data set covers a long period from 2006 to 
 
 When assessing the relationship between wind speed and fire spread rate, several statistical and contextual limitations must be acknowledged. The relationship between the two variables may not be strictly linear, and other factors including fuel moisture, temperature, humidity, topography, and fuel type also substantially influence fire spread rate. Measurement error, spatial variability across Alberta's diverse ecosystems, temporal changes over the 18-year study period, and our model's assumptions further limit how precisely we can infer or generalize this relationship [@Cruz2020]. Additionally, wind speed and fire spread rate were measured at initial assessment, potentially missing dynamic changes as fires evolved. These limitations suggest our model provides a simplified approximation of fire behavior rather than a complete predictive framework. The failure of our model to meet assumptions of normality and homoscedasticity further underline its unreliability. Future steps to improve this model could include removing statistically significant outliers.
 
-Based on our linear regression analysis of wind speed and fire spread rate, we recommend several extensions and methodological improvements that would strengthen our understanding of this critical relationship in wildfire behavior. Our simple linear regression could be expanded to include additional meteorological and environmental variables. Temperature, relative humidity, and fuel moisture content are known to interact with wind speed in determining fire spread [@Cruz2020]. For example, wind's effect on fire spread may be amplified under low humidity conditions or when fuel moisture is minimal. A multiple regression model of the form: 
-\[
+Based on our linear regression analysis of wind speed and fire spread rate, we recommend several extensions and methodological improvements that would strengthen our understanding of this critical relationship in wildfire behavior. Our simple linear regression could be expanded to include additional meteorological and environmental variables. Temperature, relative humidity, and fuel moisture content are known to interact with wind speed in determining fire spread [@Cruz2020]. For example, wind's effect on fire spread may be amplified under low humidity conditions or when fuel moisture is minimal. A multiple regression model of the form:
+
+
+$$
 \begin{aligned}
 FIRE\_SPREAD\_RATE = \beta_{0} &+ \beta_{1}(WIND\_SPEED) \\
     &+ \beta_{2}(TEMPERATURE) + \beta_{3}(HUMIDITY) \\
     &+ \beta_{4}(FUEL\_MOISTURE) + \epsilon
 \end{aligned} 
-\]
+$$ 
+
 would allow us to isolate wind speed's independent effect while controlling for confounding variables. This approach would also reveal the relative importance of each predictor and identify which variables most strongly drive fire spread in Alberta.
+
 
 # Conclusion
 
@@ -544,7 +565,7 @@ Ultimately, climate change can and will affect many domains of our lives. There 
 
 # Appendix A
 
-Here is some additional code that was not shown in the report, mostly used to generate the plots in the results section. 
+Here is some additional code that was not shown in the report, mostly used to generate the plots in the results section.
 
 ```{r}
 #put imported libraries here
@@ -594,6 +615,7 @@ ggplot(light_prop, aes(x = YEAR)) +
   )
 
 ```
+
 ```{r, echo = F}
 ####### determining proportion for lightning caused fires in 2006 and 2024  #######
 
@@ -616,7 +638,6 @@ p_lightning_2024 <- x_2024/n_2024
 assum1 <- n_2006*p_lightning_2006 ; assum2 <- n_2006*(1 - p_lightning_2006) ## greater than 10
 assum3 <- n_2024*p_lightning_2024 ; assum4 <- n_2024*(1 - p_lightning_2024)
 ```
-
 
 ```{r, warning=FALSE, echo=TRUE, results='hide', fig.show='hide'}
 # Visualization for right tailed-T test
@@ -716,7 +737,6 @@ print(p)
 
 ```
 
-
 ```{r, warning=FALSE, echo=TRUE, results='hide', fig.show='hide'}
 #linear regression plot
 # Plot with clean data (no warnings!)
@@ -742,7 +762,6 @@ cat("Complete cases used in analysis:", nrow(wildfire_clean), "\n")
 cat("Observations removed due to missing data:", 
     nrow(df) - nrow(wildfire_clean), "\n")
 ```
-
 
 ```{r, warning=FALSE, echo=TRUE, results='hide', fig.show='hide'}
 
@@ -777,7 +796,6 @@ normprob <- stand.res %>%
 print(normprob)
 
 ```
-
 
 ```{r, eval=F, warning=FALSE, echo=TRUE, results='hide', fig.show='hide'}
 #test for homoscedadicity
