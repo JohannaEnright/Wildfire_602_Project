@@ -51,7 +51,7 @@ Our forest fire data set looks at wildfires in Alberta between 2006 and 2024. Sp
 
 **Question 1:** We will investigate forest fires in 2006 and 2024, which each have 1954 and 1230 wildfire entries, respectively. We will be comparing forest fires caused by lightning to those caused by all non-natural human activity.
 
-**Question 2:** we will study all forest fire entries that contain information for fire spread rate and wind speed. This accounts for around 89% $\frac{23657}{26551}$ of data entries.
+**Question 2:** we will study all forest fire entries that contain information for fire spread rate and wind speed. This accounts for around 89% ($\frac{23657}{26551}$) of data entries.
 
 ## Variables of Interest:
 
@@ -112,7 +112,7 @@ In this project, we therefore hypothesize that wind speed will be a largely cont
 $$
 \begin{aligned}
 H_{0}&: \text{There is no correlation between wind speed and fire spread rate.} \\
-H_{A}&: \text{The alternative hypothesis is a correlation between wind speed and fire spread rate.}
+H_{A}&: \text{There is a correlation between wind speed and fire spread rate.}
 \end{aligned}
 $$
 
@@ -273,16 +273,6 @@ print(pies)
 #ggsave("../plots/pieprops.png", plot = pies, scale = 2, width = 6, height = 6, units="cm", dpi = 600)
 ```
 
-We have confirmed that our data follows the necessary assumptions required for parametric tests.
-
-```{r, asummptiontest1, include=FALSE}
-## confirming it follows assumtions (np > 10) , (nq > 10)   # is sufficiently large.
-assum1 <- n_2006*p_lightning_2006 ; assum2 <- n_2006*(1 - p_lightning_2006) ## greater than 10
-assum3 <- n_2024*p_lightning_2024 ; assum4 <- n_2024*(1 - p_lightning_2024)
-
-```
-
-When multiplying $p*n$ and $(1-p)*n$ for the 2006 data and the 2024 data, we get the values `r  c(assum1, assum2, assum3, assum4)` which are all greater than 10, thus we are able to use the parametric tests.
 
 ```{r}
 #############################  CALCULATING Z-observed ####################################
@@ -411,7 +401,7 @@ print(p)
 
 ```
 
-The scatter plot of wind speed vs. fire spread rate shows a weak positive correlation (Figure 7). This is indicated by the correlation coefficient value of 0.1372, which is both positive and near 0 
+The scatter plot of wind speed vs. fire spread rate shows a weak positive correlation (Figure 7). This is indicated by the correlation coefficient value of 0.1372, which is both positive and near 0.
 
 ```{r, echo = FALSE}
 # Create a clean dataset with only complete cases
@@ -525,14 +515,14 @@ print(homosced)
 #ggsave("../plots/homosced.png", plot = homosced, scale = 2, width = 8, height = 5, units="cm", dpi = 600)
 ```
 
-Above, the plot for checking homoscedasticity suggests that the variance at low range of wind speed is greater than the variance at the range of wind speed. Thus, there is not a uniform spread of residuals, so our data also violates the homoscedasticity assumption (Figure \@ref(fig:homosced)).
+As well, the plot for checking homoscedasticity suggests that the variance at low range of wind speed is greater than the variance at the range of wind speed. Thus, there is not a uniform spread of residuals, so our data also violates the homoscedasticity assumption (Figure \@ref(fig:homosced)).
 
 \newpage
-# Conclusion And Future Work
+# Conclusion and Future Work
 
-**Question 1:** The proportion of lightning-caused wildfires in 2024 is significantly greater than the proportion from 2006. This means that in fact, we are seeing quantifiable evidence that climate change is having a significant impact on the wildfire landscape in Canada. Our main assumption is that climate change has increased lightning frequency, which in turn may have led to more lightning-caused fires.However, we didn’t include any direct climate or weather variables in our analysis. Future steps could be to include weather data to compare with the wildfire cause proportions. For example we could obtain lightning strike data and see if the frequency of lightning strikes is indeed increasing. If the frequency of strikes is not increasing, then we could likely attribute the increase in lightning-caused fires to drier conditions, and vise-versa. It would also be interesting to use this weather data and create a linear regression between proportion of lightning-caused fires as a function of frequency of lightning strikes for each year from 2006 to 2024, as this would also help to distinguish between the driving cause of lightning-caused fires (lightning itself, or highly flammable conditions).
+**Question 1:** The proportion of lightning-caused wildfires in 2024 is significantly greater than the proportion from 2006. This means that in fact, we are seeing quantifiable evidence that climate change is having a significant impact on the wildfire landscape in Canada. Our main assumption is that climate change has increased lightning frequency, which in turn may have led to more lightning-caused fires.However, we didn’t include any direct climate or weather variables in our analysis. Future steps could be to include weather data to compare with the wildfire cause proportions. For example, we could obtain lightning strike data and see if the frequency of lightning strikes is indeed increasing. If the frequency of strikes is not increasing, then we could likely attribute the increase in lightning-caused fires to drier conditions, and vice-versa. It would also be interesting to use this weather data and create a linear regression between proportion of lightning-caused fires as a function of frequency of lightning strikes for each year from 2006 to 2024, as this would also help to distinguish between the driving cause of lightning-caused fires (lightning itself, or highly flammable conditions).
 
-Another limitation could be that our data set covers a long period from 2006 to 2024. Although our hypothesis assumes that lightning-caused wildfires have significantly increased by 2024, this large gap may introduce bias. It’s possible that 2006 and 2024 were just exceptional years, and if we included all years in between, the trend might not show a consistent increase. Thus comparing proportions for multiple years could prove more informative. Additionally, in the General_Cause column, we specifically focused on “Lightning.” However, in 2006 and 2024 there were 48 and 89 fires respectively marked as "Undetermined" or "Under Investigation". It’s possible that some of these fires were actually caused by lightning, which means our current estimates might slightly underestimate the true number of lightning-caused fires
+Another limitation could be that our data set covers a long period from 2006 to 2024. Although our hypothesis assumes that lightning-caused wildfires have significantly increased by 2024, this large gap may introduce bias. It’s possible that 2006 and 2024 were just exceptional years, and if we included all years in between, the trend might not show a consistent increase. Thus, comparing proportions for multiple years could prove more informative. Additionally, in the "General_Cause" column, we specifically focused on “Lightning.” However, in 2006 and 2024 there were 48 and 89 fires respectively, marked as "Undetermined" or "Under Investigation". It’s possible that some of these fires were actually caused by lightning, which means our current estimates might slightly underestimate the true number of lightning-caused fires
 
 **Question 2:** From a wildfire management perspective, our findings confirm that wind speed is a statistically significant driver of fire spread rate, albeit a low contributing driver. The positive relationship aligns with fire behavior theory, where higher winds accelerate combustion by increasing oxygen supply, tilting flames forward to preheat un-burned fuels, and carrying embers that can ignite spot fires ahead of the main fire front [@Cruz2020]. However, the low explanatory power of wind speed alone underscores the multivariate nature of fire behavior and highlights the need for comprehensive fire prediction models that incorporate additional environmental variables. Importantly, the correlation is bidirectional in that fires themselves can generate strong winds due to convection, meaning that wind can influence fire spread while fire can also alter wind patterns.
 
@@ -563,7 +553,7 @@ Ultimately, climate change can and will affect many domains of our lives. There 
 
 # (APPENDIX) Appendix {.unnumbered}
 
-# Appendix A
+# Appendix
 
 Here is some additional code that was not shown in the report, mostly used to generate the plots in the results section.
 
