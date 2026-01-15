@@ -2,10 +2,10 @@
 title: "Statistical Analysis of Alberta Wildfires from (2006 - 2024)"
 author: |
   Group 4:  
-  Johanna Enright – 30303537  
-  Uyoyoumena Orona – 30295200  
-  Agambir Bandesha – 30302510  
-  Ran Bi – 30301306
+  Johanna Enright  
+  Uyoyoumena Orona  
+  Agambir Bandesha  
+  Ran Bi
 date: "Date: `r Sys.Date()`"
 site: bookdown::bookdown_site
 output:
@@ -185,7 +185,7 @@ library(binom)
 
 ```{r, include=FALSE}
 #read in wildfire csv file
-url <- "https://raw.githubusercontent.com/JohannaEnright/Wildfire_602_Project/refs/heads/main/fp-historical-wildfire-data-2006-2024.csv"
+url <- "https://raw.githubusercontent.com/JohannaEnright/Alberta_Wildfire_Project/refs/heads/main/fp-historical-wildfire-data-2006-2024.csv"
 df = read_csv(url, show_col_types = F)
 ```
 
@@ -417,7 +417,8 @@ linreg <- ggplot(wildfire_clean, aes(x = WIND_SPEED, y = FIRE_SPREAD_RATE)) +
   labs(
     #title = "Effect of Wind Speed on Fire Spread Rate",
        x = "Wind Speed (km/h)",
-       y = "Fire Spread Rate (m/min)")
+       y = "Fire Spread Rate (m/min)") +
+  theme_bw()
 # Residual is the difference between what your model predicted and what actually happened.
 # Fitted values is what my model predicted for fire spread rate
 
@@ -472,7 +473,8 @@ ggplot(resid_df, aes(x = fitted, y = resid)) +
   labs(
     #title = "Residual Plot",
        x = "Fitted Values (Predicted Fire Spread Rate)",
-       y = "Residuals")
+       y = "Residuals") +
+  theme_bw()
 ```
 
 Above, the residuals are plotted against the fitted values for fire spread rate. Below are tests for the 2 assumptions of a simple linear regression: normality of the residuals and homoscedasticity.
@@ -487,7 +489,8 @@ stand.res = tibble(x = residual/SE*sqrt(1 - hatvalues(lm_model)))
 normprob <- stand.res %>% 
   ggplot(aes(sample = x)) +
   stat_qq(size = 1) +
-  stat_qq_line() # +
+  stat_qq_line() +
+  theme_bw()
  # ggtitle("Normal Probability Plot of Standardized Residuals")
 #ggsave("../plots/normprob.png", plot = normprob, scale = 2, width = 8, height = 5, units="cm", dpi = 600)
 print(normprob)
@@ -509,7 +512,8 @@ homosced <- ggplot(diagnostic.df, aes(x = WIND_SPEED, y = residuals)) +
   xlab("Wind Speed (km/h)") +
   ylab("Residuals") +
  # ggtitle("Homoscedasticity Check (Residuals vs Wind Speed)") +
-  geom_hline(yintercept = 0, color = "red", linetype = "dashed")
+  geom_hline(yintercept = 0, color = "red", linetype = "dashed") +
+  theme_bw()
 
 print(homosced)
 #ggsave("../plots/homosced.png", plot = homosced, scale = 2, width = 8, height = 5, units="cm", dpi = 600)
@@ -557,21 +561,8 @@ Ultimately, climate change can and will affect many domains of our lives. There 
 
 Here is some additional code that was not shown in the report, mostly used to generate the plots in the results section.
 
-```{r}
-#put imported libraries here
-library(tidyverse)
-library(mosaic)
-library(bookdown)
-library(binom)
-```
 
-```{r}
-#read in wildfire csv file
-url <- "https://raw.githubusercontent.com/JohannaEnright/Wildfire_602_Project/refs/heads/main/fp-historical-wildfire-data-2006-2024.csv"
-df = read_csv(url, show_col_types = F)
-```
-
-```{r, warning=FALSE, echo=TRUE, results='hide', fig.show='hide'}
+```{r, warning=FALSE, echo=T, results='hide', fig.show='hide'}
 #figure 1: proportion of wildfires throughout the years.
 light_prop = df %>%
   group_by(YEAR) %>%
@@ -583,7 +574,7 @@ light_prop = df %>%
   ungroup()
 
 #visualization
-ggplot(light_prop, aes(x = YEAR)) +
+p = ggplot(light_prop, aes(x = YEAR)) +
   geom_col(aes(y = total), fill = "skyblue", alpha = 0.6) +          # amount of wildfires
   geom_line(aes(y = prop * max(total)), color = "blue", linewidth = 0.7) +  # proportion line
   geom_point(aes(y = prop * max(total)), color = "blue", size = 1) +
@@ -661,7 +652,7 @@ p <- df_norm %>%
     plot.title = element_text(size = 8),
     #plot.subtitle = element_text(size = 8)
     )
-print(p)
+#print(p)
 ```
 
 ```{r, warning=FALSE, echo=TRUE, results='hide', fig.show='hide'}
@@ -680,7 +671,7 @@ plot_df <- tibble(
   x     = c(x_2006, x_2024, NA)
 )
 
-ggplot(plot_df, aes(x = YEAR, y = prop, fill = YEAR)) +
+p = ggplot(plot_df, aes(x = YEAR, y = prop, fill = YEAR)) +
   geom_col(width = 0.5, show.legend = FALSE) +
   geom_errorbar(aes(ymin = lower, ymax = upper), width = 0.15, linewidth = 0.8) +
   #geom_text(aes(label = ifelse(YEAR %in% c(2006, 2024), paste0("n=", n, "\nx=", x), NA)),
@@ -704,7 +695,7 @@ p = tibble(x = df$FIRE_SPREAD_RATE) %>%
   xlab("Fire Spread Rate (m/min)") +
   #ggtitle("Distribution of Fire Spread Rate") +
   theme_bw()
-print(p)
+#print(p)
 
 ```
 
@@ -723,7 +714,7 @@ p = tibble(x = df$WIND_SPEED) %>%
   xlab("Wind Speed (km/h)") +
   #ggtitle("Distribution of Wind Speed") +
   theme_bw()
-print(p)
+#print(p)
 
 ```
 
@@ -736,21 +727,22 @@ linreg <- ggplot(wildfire_clean, aes(x = WIND_SPEED, y = FIRE_SPREAD_RATE)) +
   labs(
     #title = "Effect of Wind Speed on Fire Spread Rate",
        x = "Wind Speed (km/h)",
-       y = "Fire Spread Rate (m/min)")
+       y = "Fire Spread Rate (m/min)") + 
+  theme_bw()
 # Residual is the difference between what your model predicted and what actually happened.
 # Fitted values is what my model predicted for fire spread rate
 
 #ggsave("../plots/linreg.png", plot = linreg, scale = 2, width = 8, height = 5, units="cm", dpi = 600)
-print(linreg)
+#print(linreg)
 
 ```
 
 ```{r, results="hide"}
 #counting observations
-cat("Total observations in dataset:", nrow(df), "\n")
-cat("Complete cases used in analysis:", nrow(wildfire_clean), "\n")
-cat("Observations removed due to missing data:", 
-    nrow(df) - nrow(wildfire_clean), "\n")
+# cat("Total observations in dataset:", nrow(df), "\n")
+# cat("Complete cases used in analysis:", nrow(wildfire_clean), "\n")
+# cat("Observations removed due to missing data:", 
+#     nrow(df) - nrow(wildfire_clean), "\n")
 ```
 
 ```{r, warning=FALSE, echo=TRUE, results='hide', fig.show='hide'}
@@ -759,13 +751,14 @@ cat("Observations removed due to missing data:",
 resid_df = data.frame(fitted = lm_model$fitted.values,
                        resid = lm_model$residuals)
 
-ggplot(resid_df, aes(x = fitted, y = resid)) +
+p = ggplot(resid_df, aes(x = fitted, y = resid)) +
   geom_point(alpha = 0.6) +
   geom_hline(yintercept = 0, col = "red", linetype = "dashed") +
   labs(
     #title = "Residual Plot",
        x = "Fitted Values (Predicted Fire Spread Rate)",
-       y = "Residuals")
+       y = "Residuals") +
+  theme_bw()
 
 ```
 
@@ -780,10 +773,11 @@ stand.res = tibble(x = residual/SE*sqrt(1 - hatvalues(lm_model)))
 normprob <- stand.res %>% 
   ggplot(aes(sample = x)) +
   stat_qq(size = 1) +
-  stat_qq_line() # +
- # ggtitle("Normal Probability Plot of Standardized Residuals")
+  stat_qq_line() +
+  theme_bw()
+ #ggtitle("Normal Probability Plot of Standardized Residuals")
 #ggsave("../plots/normprob.png", plot = normprob, scale = 2, width = 8, height = 5, units="cm", dpi = 600)
-print(normprob)
+#print(normprob)
 
 ```
 
@@ -801,9 +795,10 @@ homosced <- ggplot(diagnostic.df, aes(x = WIND_SPEED, y = residuals)) +
   xlab("Wind Speed (km/h)") +
   ylab("Residuals") +
  # ggtitle("Homoscedasticity Check (Residuals vs Wind Speed)") +
-  geom_hline(yintercept = 0, color = "red", linetype = "dashed")
+  geom_hline(yintercept = 0, color = "red", linetype = "dashed") +
+  theme_bw()
 
-print(homosced)
+#print(homosced)
 #ggsave("../plots/homosced.png", plot = homosced, scale = 2, width = 8, height = 5, units="cm", dpi = 600)
 ```
 
