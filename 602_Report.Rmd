@@ -185,7 +185,7 @@ library(binom)
 
 ```{r, include=FALSE}
 #read in wildfire csv file
-url <- "https://raw.githubusercontent.com/JohannaEnright/Alberta_Wildfire_Project/refs/heads/main/fp-historical-wildfire-data-2006-2024.csv"
+url <- "https://raw.githubusercontent.com/JohannaEnright/alberta_wildfire_project/refs/heads/main/fp-historical-wildfire-data-2006-2024.csv"
 df = read_csv(url, show_col_types = F)
 ```
 
@@ -805,3 +805,4 @@ homosced <- ggplot(diagnostic.df, aes(x = WIND_SPEED, y = residuals)) +
 ```{r}
 #### That's all the Code!! ####
 ```
+
